@@ -2,7 +2,7 @@
 
 ## 👀 Address
 
-[https://thessaloniki-metro.gr](thessaloniki-metro.gr)
+[thessaloniki-metro.gr](https://thessaloniki-metro.gr)
 
 ## 🧞 Commands
 
