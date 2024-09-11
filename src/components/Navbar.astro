@@ -1,9 +1,15 @@
 ---
-const currentLang = Astro.url.pathname.startsWith('/en') ? 'en' : 'el';
+type Language = 'en' | 'el';
+interface Props {
+	currentLang: Language;
+}
+
+const { currentLang } = Astro.props;
+
 const greekPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
 const englishPath = '/en' + (Astro.url.pathname === '/' ? '' : Astro.url.pathname);
 
-const menuItems = {
+const menuItems : Record<Language, string[]> = {
   en: ['Map', 'How to Pay', 'For Passengers', 'News', 'About Metro', 'Contacts'],
   el: ['Χάρτης', 'Πώς να πληρώσετε', 'Για επιβάτες', 'Νέα', 'Σχετικά με το Μετρό', 'Επικοινωνία'],
 };

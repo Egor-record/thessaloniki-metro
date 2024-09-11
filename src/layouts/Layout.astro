@@ -2,15 +2,16 @@
 
 import Navbar from '../components/Navbar.astro';
 
+const currentLang  = Astro.url.pathname.startsWith('/en') ? 'en' : 'el';
+
 interface Props {
 	title: string;
 }
-const lang = Astro.url.pathname.split('/')[1] === 'gr' ? 'gr' : 'en';
 const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -20,7 +21,7 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<Navbar lang={lang} />
+		<Navbar currentLang={currentLang} />
 		<slot />
 	</body>
 </html>
