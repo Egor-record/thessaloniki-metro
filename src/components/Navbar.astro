@@ -1,0 +1,122 @@
+---
+const currentLang = Astro.url.pathname.startsWith('/en') ? 'en' : 'el';
+const greekPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const englishPath = '/en' + (Astro.url.pathname === '/' ? '' : Astro.url.pathname);
+
+const menuItems = {
+  en: ['Map', 'How to Pay', 'For Passengers', 'News', 'About Metro', 'Contacts'],
+  el: ['Χάρτης', 'Πώς να πληρώσετε', 'Για επιβάτες', 'Νέα', 'Σχετικά με το Μετρό', 'Επικοινωνία'],
+};
+
+const currentMenuItems = menuItems[currentLang] || menuItems['el'];
+---
+
+
+<nav class="navbar">
+    <div>
+        <div class="logo">
+            <img src="https://apps3proxy.mosmetro.tech/webapp-mosmetro/mm-logo-red.svg" alt="Moscow Metro Logo" />
+
+            {currentLang === 'en' ? (
+              <span>Metro Thessaloniki</span>
+          ) : (
+              <span>Μετρό Θεσσαλονίκης</span>
+          )}
+         </div>
+    </div>
+
+    <ul class="menu">
+        {currentMenuItems.map((item) => (
+          <li><a href={`/${currentLang}/${item.toLowerCase()}`}>{item}</a></li>
+        ))}
+        <li class="dropdown">
+          {currentLang === 'en' ? (
+            <a href={greekPath}>Ελ</a>
+          ) : (
+            <a href={englishPath}>En</a>
+          )}
+        </li>
+    </ul>
+
+  </nav>
+  <style>
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .logo img {
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    .menu {
+        list-style: none;
+        display: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+      .menu {
+        display: flex;
+      }
+    }
+
+    .menu li {
+        margin-right: 20px;
+        position: relative;
+    }
+
+    .menu li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .menu .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .menu .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        list-style: none;
+        padding: 10px;
+    }
+
+    .menu .dropdown-menu li {
+        margin: 0;
+    }
+
+    .menu .dropdown-menu li a {
+        color: #333;
+    }
+
+    .login-btn {
+        background-color: #e70000;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .login-btn:hover {
+        background-color: #cc0000;
+    }
+  </style>
