@@ -32,8 +32,13 @@ const currentMenuItems = menuItems[currentLang] || menuItems['el'];
     </div>
 
     <ul class="menu">
-        {currentMenuItems.map((item) => (
-          <li><a href={`/${currentLang}/${item.toLowerCase()}`}>{item}</a></li>
+        {currentMenuItems.map((item, index) => (
+          <li>
+           {currentLang === 'en' ? (
+            <a href={`/${currentLang}/${item.toLowerCase().replace(/\s/g, '')}`}>{item}</a> ) : (
+            <a href={`${menuItems.en[index].toLowerCase().replace(/\s/g, '')}`}>{item}</a>)
+           }
+          </li>
         ))}
         <li class="dropdown">
           {currentLang === 'en' ? (
