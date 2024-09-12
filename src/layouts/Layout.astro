@@ -43,6 +43,23 @@ const { title, description } = Astro.props;
 		<slot />
 	</body>
 </html>
+<script>
+    if (typeof window !== 'undefined') {
+    console.log(
+        "%cMetro Thessaloniki Fan Site\n\n" +
+        "%cVersion: %c1.0.0\n\n" +
+        "%cTo report an issue, visit:\n%chttps://github.com/Egor-record/thessaloniki-metro/issues\n\n" +
+        "%cFor communication: %cegor@siaskov.ru\n",
+        "font-size: 16px; font-weight: bold; color: #2d85c4;", // Style for heading
+        "font-size: 14px; color: #444;", // Style for general text
+        "font-size: 14px; color: #ff7f50;", // Style for version
+        "font-size: 14px; color: #444;", // Style for general text
+        "font-size: 14px; color: #007acc;", // Style for URL
+        "font-size: 14px; color: #444;", // Style for general text
+        "font-size: 14px; color: #007acc;"  // Style for email
+    );
+}
+</script>
 <style is:global>
 	:root {
 
