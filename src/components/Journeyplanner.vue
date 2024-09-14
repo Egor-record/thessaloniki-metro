@@ -1,35 +1,38 @@
 <template>
-  <div class="journey-planner_wrapper">
-    <div class="journey-planner">
-      <h2>{{ lang === 'el' ? 'Πού θέλετε να πάτε;' : 'Where do you want to go?' }}</h2>
-      <div class="journey-inputs">
-        <div class="input-group">
-          <input
-            type="text"
-            :placeholder="lang === 'el' ? 'Από: Διεύθυνση, οδός, σταθμός' : 'From: Address, street, station'"
-          />
-          <button class="swap-button">&#x21c4;</button>
-          <input
-            type="text"
-            :placeholder="lang === 'el' ? 'Προς: Διεύθυνση, οδός, σταθμός' : 'To: Address, street, station'"
-          />
-          <button class="plan-button">{{ lang === 'el' ? 'Προγραμματίστε τη διαδρομή σας' : 'Plan your journey' }}</button>
-        </div>
-        <div class="options-group">
-          <div class="option-buttons">
-            <button class="option-button selected">{{ lang === 'el' ? 'Αναχώρηση' : 'Departure' }}</button>
-            <button class="option-button">{{ lang === 'el' ? 'Άφιξη' : 'Arrival' }}</button>
+  <section class="journey-planner_wrapper">
+      <img src="https://i.pinimg.com/originals/27/f6/87/27f687bb9376be731661403630a2a313.jpg" alt="Photo of Athens on site about Thessaloniki" width="1920" height="384">
+      <div class="journey-planner">
+        <div class="journey-planner_inner">
+          <h2>{{ lang === 'el' ? 'Πού θέλετε να πάτε;' : 'Where do you want to go?' }}</h2>
+          <div class="journey-inputs">
+            <div class="input-group">
+              <input
+                type="text"
+                :placeholder="lang === 'el' ? 'Από: Διεύθυνση, οδός, σταθμός' : 'From: Address, street, station'"
+              />
+              <button class="swap-button">&#x21c4;</button>
+              <input
+                type="text"
+                :placeholder="lang === 'el' ? 'Προς: Διεύθυνση, οδός, σταθμός' : 'To: Address, street, station'"
+              />
+              <button class="plan-button">{{ lang === 'el' ? 'Προγραμματίστε τη διαδρομή σας' : 'Plan your journey' }}</button>
+            </div>
+            <div class="options-group">
+              <div class="option-buttons">
+                <button class="option-button selected">{{ lang === 'el' ? 'Αναχώρηση' : 'Departure' }}</button>
+                <button class="option-button">{{ lang === 'el' ? 'Άφιξη' : 'Arrival' }}</button>
+              </div>
+              <div class="datetime-picker">
+                <input type="date" value="2024-09-10" />
+                <input type="time" value="21:14" />
+              </div>
+              <button class="now-button">{{ lang === 'el' ? 'Τώρα' : 'Now' }} &#8635;</button>
+              <button class="extra-options-button">{{ lang === 'el' ? 'Πρόσθετες επιλογές' : 'Extra options' }} &#9662;</button>
+            </div>
           </div>
-          <div class="datetime-picker">
-            <input type="date" value="2024-09-10" />
-            <input type="time" value="21:14" />
-          </div>
-          <button class="now-button">{{ lang === 'el' ? 'Τώρα' : 'Now' }} &#8635;</button>
-          <button class="extra-options-button">{{ lang === 'el' ? 'Πρόσθετες επιλογές' : 'Extra options' }} &#9662;</button>
         </div>
-      </div>
-  </div>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -45,19 +48,41 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
     .journey-planner_wrapper {
-      background-image: url('https://wp-themes.com/wp-content/themes/twentytwentyfour/assets/images/building-exterior.webp');
       padding: 20px 0;
-      background-position-y: 562px;
+      display: grid;
+      width: 100%;
+      grid-template-rows: repeat(2,12rem) repeat(2,auto);
+      grid-template-columns: 1rem minmax(0,1fr) 1rem;
+      img {
+        object-fit: cover;
+        object-position: 49.7396% 21.3542%;
+        grid-row-start: 1;
+        width: 100%;
+        height: 100%;
+        grid-column-start: 1;
+        grid-column: 1/-1;
+      }
     }
+
     .journey-planner {
-    background-color: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    margin: 0 auto;
+      background-color: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+      margin: 0 auto;
+      grid-column-start: 2;
+      place-self: center;
+      grid-row-start: 2;
+      grid-row: 1/-1;
+  }
+
+  .journey-planner_inner {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
   }
 
   .journey-planner h2 {
@@ -160,7 +185,10 @@ export default {
   @media screen and (min-width: 768px) {
     .journey-planner {
       max-width: 800px; /* Centered container with max-width for larger screens */
-      padding: 20px;
+      padding-left: 4rem;
+      padding-right: 4rem;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
     }
 
     .input-group {

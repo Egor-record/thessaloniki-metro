@@ -2,11 +2,17 @@
 import Layout from '../../layouts/Layout.astro';
 import Journerplanner from '../../components/Journeyplanner.vue';
 
+const data = {
+	title: "Thessaloniki Metro",
+	description: "Discover the latest news, maps, and updates about the Thessaloniki Metro. Your guide to routes, stations, and everything you need to know about Thessaloniki's upcoming subway.",
+	lang : "en"
+}
+
 ---
 
-<Layout title="Thessaloniki Metro" description="Discover the latest news, maps, and updates about the Thessaloniki Metro. Your guide to routes, stations, and everything you need to know about Thessaloniki's upcoming subway.">
+<Layout title={data.title} description={data.description}>
 	<main>
-		<Journerplanner lang="en"/>
+		<Journerplanner lang={data.lang}/>
 	</main>
 </Layout>
 <style>
