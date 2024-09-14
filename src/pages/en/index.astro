@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Journerplanner from '../../components/Journeyplanner.vue';
+import NewsHighlights from '../../components/NewsHighlights.astro';
 
 const data = {
 	title: "Thessaloniki Metro",
@@ -13,6 +14,7 @@ const data = {
 <Layout title={data.title} description={data.description}>
 	<main>
 		<Journerplanner lang={data.lang}/>
+		<NewsHighlights lang={data.lang} />
 	</main>
 </Layout>
 <style>
