@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Journerplanner from '../components/Journeyplanner.vue';
+import NewsHighlights from '../components/NewsHighlights.astro';
+
+type Language = 'en' | 'el';
+interface data {
+	title: string;
+
+	lang: Language
+}
+
+const data = {
+	title: 'Σελίδα δεν βρέθηκε',
+	description: "404 - Η σελίδα δεν βρέθηκε",
+	lang: "el" as Language,
+}
+
+---
+
+<Layout title={data.title}  description={data.description}>
+	<main>
+        <h1>404 - Η σελίδα δεν βρέθηκε</h1>
+        <p>Ωχ! Η σελίδα που ψάχνετε δεν υπάρχει.</p>
+        <a href="/">Επιστροφή στην αρχική σελίδα</a>
+	</main>
+</Layout>
+<style>
+    main {
+        background-color: #fff;
+    }
+</style>

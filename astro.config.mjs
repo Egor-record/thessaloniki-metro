@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
-
+import sitemap from '@astrojs/sitemap';
 import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://thessaloniki-metro.gr',
   vite: {
     build: {
       sourcemap: true
@@ -16,5 +17,5 @@ export default defineConfig({
       transformer: "postcss"
     }
   },
-  integrations: [vue()]
+  integrations: [vue(), sitemap()]
 });

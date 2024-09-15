@@ -3,10 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import Journerplanner from '../components/Journeyplanner.vue';
 import NewsHighlights from '../components/NewsHighlights.astro';
 
+type Language = 'en' | 'el';
+interface data {
+	title: string;
+	description: string,
+	lang: Language
+}
+
 const data = {
 	title: 'Μετρό Θεσσαλονίκης',
 	description: "Ανακαλύψτε τα τελευταία νέα, χάρτες και ενημερώσεις για το Μετρό Θεσσαλονίκης. Οδηγός για τις διαδρομές, τους σταθμούς και ό,τι πρέπει να γνωρίζετε για το νέο μετρό.",
-	lang: "el"
+	lang: "el" as Language,
 }
 
 ---

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+
+type Language = 'en' | 'el';
+interface data {
+	title: string;
+	description: string,
+	lang: Language
+}
+
+const data = {
+	title: 'Χάρτης Μετρό Θεσσαλονίκης',
+	description: "Εξερευνήστε τον πλήρη χάρτη του Μετρό Θεσσαλονίκης. Βρείτε όλες τις διαδρομές, σταθμούς και συνδέσεις για να σχεδιάσετε το ταξίδι σας αποτελεσματικά.",
+	lang: "el" as Language,
+}
+
+---
+
+<Layout title={data.title}  description={data.description}>
+	<main>
+        <h1>{data.title}</h1>
+	</main>
+</Layout>
+<style>
+
+</style>

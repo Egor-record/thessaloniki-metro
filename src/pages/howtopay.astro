@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+
+type Language = 'en' | 'el';
+interface data {
+	title: string;
+	description: string,
+	lang: Language
+}
+
+const data = {
+	title: 'Πώς να Πληρώσετε για τα Εισιτήρια του Μετρό Θεσσαλονίκης',
+	description: "Μάθετε πώς να αγοράσετε εισιτήρια για το Μετρό Θεσσαλονίκης, συμπεριλαμβανομένων των τρόπων πληρωμής, των τύπων εισιτηρίων και των διαθέσιμων εκπτώσεων.",
+	lang: "el" as Language,
+}
+
+---
+
+<Layout title={data.title}  description={data.description}>
+	<main>
+        <h1>{data.title}</h1>
+	</main>
+</Layout>
+<style>
+
+</style>

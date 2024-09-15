@@ -3,10 +3,17 @@ import Layout from '../../layouts/Layout.astro';
 import Journerplanner from '../../components/Journeyplanner.vue';
 import NewsHighlights from '../../components/NewsHighlights.astro';
 
+type Language = 'en' | 'el';
+interface data {
+	title: string;
+	description: string,
+	lang: Language
+}
+
 const data = {
 	title: "Thessaloniki Metro",
 	description: "Discover the latest news, maps, and updates about the Thessaloniki Metro. Your guide to routes, stations, and everything you need to know about Thessaloniki's upcoming subway.",
-	lang : "en"
+	lang : 'en' as Language,
 }
 
 ---

@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+
+type Language = 'en' | 'el';
+interface data {
+	title: string;
+	description: string,
+	lang: Language
+}
+
+const data = {
+	title: 'Contact the Thessaloniki Metro',
+	description: "Get in touch with the Thessaloniki Metro team for inquiries, support, or feedback about the metro system and services.",
+	lang: "en" as Language,
+}
+
+---
+
+<Layout title={data.title}  description={data.description}>
+	<main>
+        <h1>{data.title}</h1>
+	</main>
+</Layout>
+<style>
+
+</style>
