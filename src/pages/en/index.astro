@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Journerplanner from '../../components/Journeyplanner.vue';
 import NewsHighlights from '../../components/NewsHighlights.astro';
+import Faq from '../../components/Faq.astro';
 
 type Language = 'en' | 'el';
 interface data {
@@ -22,6 +23,7 @@ const data = {
 	<main>
 		<Journerplanner lang={data.lang}/>
 		<NewsHighlights lang={data.lang} />
+		<Faq lang={data.lang} />
 	</main>
 </Layout>
 <style>

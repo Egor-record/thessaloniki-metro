@@ -1,6 +1,6 @@
 <template>
   <section class="journey-planner_wrapper">
-      <img src="https://i.pinimg.com/originals/27/f6/87/27f687bb9376be731661403630a2a313.jpg" alt="Photo of Athens on site about Thessaloniki" width="1920" height="384">
+      <img src="sunset.jpeg" alt="Sunset" width="1920" height="384">
       <div class="journey-planner">
         <div class="journey-planner_inner">
           <h2>{{ lang === 'el' ? 'Πού θέλετε να πάτε;' : 'Where do you want to go?' }}</h2>
@@ -57,7 +57,7 @@ export default {
       grid-template-columns: 1rem minmax(0,1fr) 1rem;
       img {
         object-fit: cover;
-        object-position: 49.7396% 21.3542%;
+        object-position: 59.74% 54%;
         grid-row-start: 1;
         width: 100%;
         height: 100%;

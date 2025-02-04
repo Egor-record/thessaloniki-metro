@@ -1,0 +1,135 @@
+---
+import type { Language, Translations } from '@types/global';
+interface Props {
+	lang: Language;
+}
+const { lang } = Astro.props;
+const $t: Translations = {
+    el: {
+        header: 'Συχνές Ερωτήσεις',
+        firstQuestion: 'Πού μπορώ να αγοράσω εισιτήριο για το ταξίδι;',
+        firstAnswer: 'Όλα τα εισιτήρια και οι εξατομικευμένες κάρτες μπορούν να αγοραστούν από τα αυτόματα μηχανήματα έκδοσης εισιτηρίων στους σταθμούς.',
+        secondQuestion: 'Μπορώ να πληρώσω με τραπεζική κάρτα;',
+        secondAnswer: 'Θα είναι δυνατό στο άμεσο μέλλον.',
+        thirdQuestion: 'Πώς μπορώ να συνδεθώ στο Wi-Fi στο μετρό;',
+        thirdAnswer: 'Δεν υπάρχει Wi-Fi στο μετρό.'
+    },
+    en : {
+        header: 'Frequently Asked Questions',
+        firstQuestion: 'Where can I get a ticket for travel',
+        firstAnswer: 'All tickets and personalized cards can be bought at the station’s ticket vending machines.',
+        secondQuestion: 'Can I pay with a bank card',
+        secondAnswer: 'It will be possible in the near future',
+        thirdQuestion: 'How do I connect to Wi-Fi in the metro?',
+        thirdAnswer: 'There is no Wi-Fi in the metro'
+    }
+}
+---
+<section>
+    <div class="faq-container">
+        <h1>{$t[lang].header}</h1>
+        <div class="accordion-item">
+            <button class="accordion-title">
+                {$t[lang].firstQuestion}
+                <span class="icon-open">−</span>
+                <span class="icon-closed">+</span>
+            </button>
+            <div class="accordion-content">
+                {$t[lang].firstAnswer}
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-title">
+                {$t[lang].secondQuestion}
+                <span class="icon-open">−</span>
+                <span class="icon-closed">+</span>
+            </button>
+            <div class="accordion-content">
+                <p>{$t[lang].secondAnswer}</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-title">
+                {$t[lang].thirdQuestion}
+                <span class="icon-open">−</span>
+                <span class="icon-closed">+</span>
+            </button>
+            <div class="accordion-content">
+                <p> {$t[lang].thirdAnswer}</p>
+            </div>
+        </div>
+    </div>
+</section>
+<script  is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const headers = document.querySelectorAll('.accordion-title');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        header.classList.toggle('open');
+        const content = header.nextElementSibling;
+        content.classList.toggle('open');
+      });
+    });
+  });
+</script>
+<style>
+    .faq-container {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .accordion-item {
+        border-top: 1px solid #ddd;
+        padding: 10px 0;
+    }
+
+    .accordion-title {
+        background: none;
+        border: none;
+        color: black;
+        font-size: 1rem;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        padding: 10px 0;
+        outline: none;
+    }
+
+    button.open span.icon-closed,
+    button span.icon-open {
+        display: none;
+    }
+
+    button.open span.icon-open {
+        display: block;
+    }
+
+    .icon {
+        font-size: 1.2rem;
+        color: #d33;
+    }
+
+    .accordion-content {
+        display: none;
+        padding: 10px 0;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .accordion-content.open {
+        display: block;
+    }
+
+    ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+</style>

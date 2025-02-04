@@ -1,30 +1,69 @@
 ---
 
-type Language = 'en' | 'el';
+import type { Language, Translations } from '@types/global';
 interface Props {
 	lang: Language;
 }
 const { lang } = Astro.props;
-const data = {
+const $t: Translations = {
     el: {
-        header : 'Χρήσιμες πληροφορίες πριν το ταξίδι'
+        header : 'Πληροφορίες για τους επιβάτες',
+        mapHeader: 'Διαδραστικός χάρτης του μετρό Θεσσαλονίκης',
+        makeRoad: 'Σχεδιάστε τη διαδρομή σας',
+        metroMap: 'Χάρτης μετρό',
+        howToPay: 'Πώς να πληρώσετε για μια διαδρομή',
+        howToPayAbout: 'Όλα σχετικά με την πληρωμή και τα τιμολόγια',
+        paymentCard: 'Κάρτα πληρωμής',
+        guide: 'Οδηγός για τους σταθμούς',
+        information: 'Χρήσιμες πληροφορίες',
+        infoBox: 'Infobox'
     },
     en : {
-        header: 'Useful info before journey'
+        header: 'Information for passengers',
+        mapHeader: 'Interactive map of the Thessaloniki metro',
+        makeRoad: 'Plan your route',
+        metroMap: 'Metro Map',
+        howToPay: 'How to pay for a trip',
+        howToPayAbout: 'All about payment and tariffs',
+        paymentCard: 'Payment Card',
+        guide: 'Guide to stations',
+        information: 'Useful Information',
+        infoBox: 'Infobox'
     }
 }
 
 ---
 
 <section>
-    <div>
-        <h2 class="text-center">{data[lang].header}</h2>
+    <div class="newsHighlights">
+        <h2 class="text-center">{$t[lang].header}</h2>
+        <div class="info-section">
+            <div class="info-card info-card--big">
+              <h3>{$t[lang].mapHeader}</h3>
+              <p>{$t[lang].makeRoad}</p>
+              <img src="https://via.placeholder.com/300x200" alt={$t[lang].metroMap}>
+            </div>
+            <div class="info-card info-card--b">
+                <h3>{$t[lang].howToPay}</h3>
+                <p>{$t[lang].howToPayAbout}</p>
+                <img src="https://via.placeholder.com/300x200" alt={$t[lang].paymentCard}>
+            </div>
+            <div class="info-card info-card--c">  
+              <h3>{$t[lang].guide}</h3>
+              <p>{$t[lang].information}</p>
+              <img src="https://via.placeholder.com/300x200" alt={$t[lang].infoBox}>
+            </div>
+          </div>
     </div>
 </section>
 <style>
     section {
         background-color: #fff;
         padding: 30px;
+    }
+    .newsHighlights {
+        max-width: 1200px;
+        margin: 0 auto;
     }
     h2 {
         position: relative;
@@ -38,6 +77,72 @@ const data = {
         clip-path: path('M11.93.684v8.039l5.633-5.633 1.216 1.23-5.66 5.66h8.04v1.737H13.2l5.701 5.701-1.23 1.23-5.742-5.742V21h-1.737v-8.094l-5.77 5.77-1.23-1.217 5.743-5.742H.842V9.98h8.162l-5.701-5.7 1.23-1.231 5.66 5.66V.684h1.737Z');
         display: block;
         margin: 0 auto;
+    }
+
+    .info-section {
+        display: grid;
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        align-items: stretch;
+        grid-auto-rows: minmax(170px, auto);
+        grid-template-areas:
+            "a b" 
+            "a c";
+    }
+
+    @media screen and (min-width: 30em) {
+        .info-section {
+            gap: 20px;
+            grid-template-areas:
+            "a b" 
+            "a c" }
+    }
+    @media screen and (min-width: 48em) {
+        .info-section {
+            gap: 25px;
+            grid-auto-rows: minmax(200px, auto);
+        }
+    }
+
+    @media screen and (min-width: 62em) {
+        .info-section {
+            grid-auto-rows: minmax(250px, auto);
+        }
+    }
+    .info-card--big {
+        overflow: hidden;
+        isolation: isolate;
+        grid-area: a;
+    }
+
+    .info-card--b {
+        overflow: hidden;
+        isolation: isolate;
+        grid-area: b;
+        flex-direction: column;
+        overflow: hidden;
+        isolation: isolate;
+    }
+    .info-card--c {
+        overflow: hidden;
+        isolation: isolate;
+        grid-area: c;
+        background: #DCEEFF;
+    }
+    .info-card {
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .info-card img {
+        width: 100%;
+        height: auto;
+        margin-top: 10px;
+        border-radius: 8px;
     }
 
     @media screen and (min-width: 768px) {
