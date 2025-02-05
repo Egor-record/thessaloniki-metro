@@ -1,33 +1,34 @@
 <template>
   <section class="journey-planner_wrapper">
-      <img src="sunset.jpeg" alt="Sunset" width="1920" height="384">
       <div class="journey-planner">
         <div class="journey-planner_inner">
-          <h2>{{ lang === 'el' ? 'Πού θέλετε να πάτε;' : 'Where do you want to go?' }}</h2>
-          <div class="journey-inputs">
-            <div class="input-group">
-              <input
-                type="text"
-                :placeholder="lang === 'el' ? 'Από: Διεύθυνση, οδός, σταθμός' : 'From: Address, street, station'"
-              />
-              <button class="swap-button">&#x21c4;</button>
-              <input
-                type="text"
-                :placeholder="lang === 'el' ? 'Προς: Διεύθυνση, οδός, σταθμός' : 'To: Address, street, station'"
-              />
-              <button class="plan-button">{{ lang === 'el' ? 'Προγραμματίστε τη διαδρομή σας' : 'Plan your journey' }}</button>
-            </div>
-            <div class="options-group">
-              <div class="option-buttons">
-                <button class="option-button selected">{{ lang === 'el' ? 'Αναχώρηση' : 'Departure' }}</button>
-                <button class="option-button">{{ lang === 'el' ? 'Άφιξη' : 'Arrival' }}</button>
+          <div class="passanger-img">
+            <img src="photos/passanger.jpg" alt="Passanger Paying for tickets">
+          </div>
+          <div class="form-wrapper">
+            <h2>{{ $t('whereTo') }}</h2>
+            <div class="journey-inputs">
+              <div class="input-group">
+                <input type="text" :placeholder="$t('from')" />
+                <button class="swap-button">&#x21c4;</button>
+                <input
+                  type="text"
+                  :placeholder="$t('to')"
+                />
+                <button class="plan-button">{{ $t('plan') }}</button>
               </div>
-              <div class="datetime-picker">
-                <input type="date" value="2024-09-10" />
-                <input type="time" value="21:14" />
+              <div class="options-group">
+                <div class="option-buttons">
+                  <button class="option-button selected">{{ $t('departure') }}</button>
+                  <button class="option-button">{{ $t('arrival') }}</button>
+                </div>
+                <div class="datetime-picker">
+                  <input type="date" value="2024-09-10" />
+                  <input type="time" value="21:14" />
+                </div>
+                <button class="now-button">{{ $t('now') }} &#8635;</button>
+                <button class="extra-options-button">{{ $t('extra') }} &#9662;</button>
               </div>
-              <button class="now-button">{{ lang === 'el' ? 'Τώρα' : 'Now' }} &#8635;</button>
-              <button class="extra-options-button">{{ lang === 'el' ? 'Πρόσθετες επιλογές' : 'Extra options' }} &#9662;</button>
             </div>
           </div>
         </div>
@@ -36,6 +37,28 @@
 </template>
 
 <script>
+const TRANSLATION = {
+  el: {
+     whereTo: 'Πού θέλετε να πάτε;',
+     from: 'Από: Διεύθυνση, οδός, σταθμός',
+     to: 'Προς: Διεύθυνση, οδός, σταθμός',
+     plan: 'Προγραμματίστε τη διαδρομή σας',
+     departure: 'Αναχώρηση',
+     arrival: 'Άφιξη',
+     now: 'Τώρα',
+     extra: 'Πρόσθετες επιλογές'
+  },
+  en: {
+    whereTo: 'Where do you want to go?',
+    from: 'From: Address, street, station',
+    to: 'To: Address, street, station',
+    plan: 'Plan your journey',
+    departure: 'Departure',
+    arrival: 'Arrival',
+    now: 'Now',
+    extra: 'Extra options'
+  }
+}
 export default {
   name: 'Journeyplanner',
   props: {
@@ -45,29 +68,34 @@ export default {
       default: 'el',
     },
   },
+  methods: {
+    $t (word) {
+      return TRANSLATION[this.lang][word]
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-    .journey-planner_wrapper {
-      padding: 20px 0;
-      display: grid;
+  .journey-planner_wrapper {
+    padding: 20px 0;
+    display: grid;
+    width: 100%;
+    grid-template-rows: repeat(2,12rem) repeat(2,auto);
+    grid-template-columns: 1rem minmax(0,1fr) 1rem;
+    img.journey-planner__bg-img {
+      object-fit: cover;
+      object-position: 59.74% 54%;
+      grid-row-start: 1;
       width: 100%;
-      grid-template-rows: repeat(2,12rem) repeat(2,auto);
-      grid-template-columns: 1rem minmax(0,1fr) 1rem;
-      img {
-        object-fit: cover;
-        object-position: 59.74% 54%;
-        grid-row-start: 1;
-        width: 100%;
-        height: 100%;
-        grid-column-start: 1;
-        grid-column: 1/-1;
-      }
+      height: 100%;
+      grid-column-start: 1;
+      grid-column: 1/-1;
     }
+  }
 
-    .journey-planner {
-      background-color: white;
+  .journey-planner {
+      background-color: var(--main-white-color);
       padding: 15px;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -77,6 +105,13 @@ export default {
       place-self: center;
       grid-row-start: 2;
       grid-row: 1/-1;
+  }
+
+  .passanger-img img {
+    max-width: 500px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
 
   .journey-planner_inner {
@@ -119,8 +154,8 @@ export default {
   }
 
   .plan-button {
-    background-color: #37505D;
-    color: white;
+    background-color: #a60100;
+    color: var(--main-white-color);
     border: none;
     padding: 10px 20px;
     border-radius: 6px;
@@ -130,7 +165,7 @@ export default {
   }
 
   .plan-button:hover, .plan-button:active {
-    background-color: #1c2930;
+    background-color: #7b0100;
   }
 
   .options-group {
@@ -156,7 +191,10 @@ export default {
   }
 
   .option-button.selected {
-    background-color: #c6eaff;
+    background-color: #ffd32c;
+    &:hover { 
+      background-color: #ecc329;
+    }
   }
 
   .datetime-picker {
@@ -184,11 +222,17 @@ export default {
   /* Media Queries for larger screens (tablets and desktops) */
   @media screen and (min-width: 768px) {
     .journey-planner {
-      max-width: 800px; /* Centered container with max-width for larger screens */
-      padding-left: 4rem;
-      padding-right: 4rem;
-      padding-top: 3rem;
-      padding-bottom: 3rem;
+      max-width: 1100px;
+      padding: 0 4rem 0 0;
+    }
+
+    .journey-planner_inner {
+      flex-direction: row;
+      gap: 20px;
+    }
+
+    .form-wrapper {
+      padding-top: 30px;
     }
 
     .input-group {

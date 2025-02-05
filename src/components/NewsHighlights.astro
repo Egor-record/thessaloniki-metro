@@ -46,7 +46,7 @@ const $t: Translations = {
             <div class="info-card info-card--b">
                 <h3>{$t[lang].howToPay}</h3>
                 <p>{$t[lang].howToPayAbout}</p>
-                <img src="https://via.placeholder.com/300x200" alt={$t[lang].paymentCard}>
+                <img src="icons/ticket.jpg" alt={$t[lang].paymentCard} class="info-card__ticket-img">
             </div>
             <div class="info-card info-card--c">  
               <h3>{$t[lang].guide}</h3>
@@ -58,7 +58,7 @@ const $t: Translations = {
 </section>
 <style>
     section {
-        background-color: #fff;
+        background-color: var(--main-white-color);
         padding: 30px;
     }
     .newsHighlights {
@@ -143,6 +143,10 @@ const $t: Translations = {
         height: auto;
         margin-top: 10px;
         border-radius: 8px;
+    }
+
+    .info-card__ticket-img {
+        max-width: 300px;
     }
 
     @media screen and (min-width: 768px) {

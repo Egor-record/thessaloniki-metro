@@ -44,21 +44,19 @@ const { title, description } = Astro.props;
 	</body>
 </html>
 <script>
-    if (typeof window !== 'undefined') {
-    console.log(
-        "%cMetro Thessaloniki Fan Site\n\n" +
-        "%cVersion: %c1.0.0\n\n" +
-        "%cTo report an issue, visit:\n%chttps://github.com/Egor-record/thessaloniki-metro/issues\n\n" +
-        "%cFor communication: %cegor@siaskov.ru\n",
-        "font-size: 16px; font-weight: bold; color: #2d85c4;", // Style for heading
-        "font-size: 14px; color: #444;", // Style for general text
-        "font-size: 14px; color: #ff7f50;", // Style for version
-        "font-size: 14px; color: #444;", // Style for general text
-        "font-size: 14px; color: #007acc;", // Style for URL
-        "font-size: 14px; color: #444;", // Style for general text
-        "font-size: 14px; color: #007acc;"  // Style for email
-    );
-}
+console.log(
+	"%cMetro Thessaloniki Fan Site\n\n" +
+	"%cVersion: %c1.0.0\n\n" +
+	"%cTo report an issue, visit:\n%chttps://github.com/Egor-record/thessaloniki-metro/issues\n\n" +
+	"%cFor communication: %cmailbox@thessaloniki-metro.gr\n",
+	"font-size: 16px; font-weight: bold; color: #2d85c4;", // Style for heading
+	"font-size: 14px; color: #444;", // Style for general text
+	"font-size: 14px; color: #ff7f50;", // Style for version
+	"font-size: 14px; color: #444;", // Style for general text
+	"font-size: 14px; color: #007acc;", // Style for URL
+	"font-size: 14px; color: #444;", // Style for general text
+	"font-size: 14px; color: #007acc;"  // Style for email
+);
 </script>
 <style>
 
@@ -66,7 +64,7 @@ const { title, description } = Astro.props;
 <style is:global>
 	@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&family=Roboto&display=swap');
 	:root {
-
+		--main-white-color: white;
 	}
 	@font-face {
 		font-family: "Roboto", sans-serif;
@@ -84,7 +82,7 @@ const { title, description } = Astro.props;
 	body {
 		font-family: "Inter", sans-serif;
 		margin: 0;
-		background-color: #ebebef;
+		/* background-color: #ebebef; */
 		color: #1C2930
 	}
 
