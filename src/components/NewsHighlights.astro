@@ -41,17 +41,17 @@ const $t: Translations = {
             <div class="info-card info-card--big">
               <h3>{$t[lang].mapHeader}</h3>
               <p>{$t[lang].makeRoad}</p>
-              <img src="https://via.placeholder.com/300x200" alt={$t[lang].metroMap}>
+              <img src="icons/map.png" class="info-card__map" alt={$t[lang].metroMap}>
             </div>
             <div class="info-card info-card--b">
                 <h3>{$t[lang].howToPay}</h3>
                 <p>{$t[lang].howToPayAbout}</p>
-                <img src="icons/ticket.jpg" alt={$t[lang].paymentCard} class="info-card__ticket-img">
+                <img src="photos/automat.png" alt={$t[lang].paymentCard} class="info-card__ticket-img">
             </div>
             <div class="info-card info-card--c">  
               <h3>{$t[lang].guide}</h3>
               <p>{$t[lang].information}</p>
-              <img src="https://via.placeholder.com/300x200" alt={$t[lang].infoBox}>
+              <img src="" alt={$t[lang].infoBox}>
             </div>
           </div>
     </div>
@@ -119,6 +119,7 @@ const $t: Translations = {
         grid-area: a;
     }
 
+
     .info-card--b {
         overflow: hidden;
         isolation: isolate;
@@ -143,7 +144,13 @@ const $t: Translations = {
         height: auto;
         margin-top: 10px;
         border-radius: 8px;
+        &.info-card__map {
+            transform: translateX(-85px);
+            height: 270px;
+            width: auto;
+        }
     }
+    
 
     .info-card__ticket-img {
         max-width: 300px;
@@ -152,6 +159,12 @@ const $t: Translations = {
     @media screen and (min-width: 768px) {
         section {
             padding: 76.95px;
+        }
+
+        .info-card img.info-card__map {
+            transform: none;
+            width: 100%;
+            height: auto;
         }
     }
 

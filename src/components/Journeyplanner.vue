@@ -3,7 +3,7 @@
       <div class="journey-planner">
         <div class="journey-planner_inner">
           <div class="passanger-img">
-            <img src="photos/passanger.jpg" alt="Passanger Paying for tickets">
+            <img src="photos/pass.jpg" alt="Passanger Paying for tickets">
           </div>
           <div class="form-wrapper">
             <h2>{{ $t('whereTo') }}</h2>
