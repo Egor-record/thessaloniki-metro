@@ -25,9 +25,9 @@ const currentMenuItems = menuItems[currentLang] || menuItems['el'];
             <img src="/icons/logo_small.png" alt="Moscow Metro Logo" />
           </a>
             {currentLang === 'en' ? (
-              <span>Metro Thessaloniki</span>
+              <span class="metro-title">Metro Thessaloniki</span>
           ) : (
-              <span>Μετρό Θεσσαλονίκης</span>
+              <span class="metro-title">Μετρό Θεσσαλονίκης</span>
           )}
 
          </div>
@@ -53,6 +53,17 @@ const currentMenuItems = menuItems[currentLang] || menuItems['el'];
 
   </nav>
   <style>
+    .metro-title {
+      position: relative;
+    }
+    .metro-title::after {
+      color: #005b92;
+      content: "Unofficial";
+      font-weight: 700;
+      font-size: 10px;
+      position: absolute;
+      top: -7px;
+  }
     .navbar {
         display: flex;
         justify-content: space-between;
