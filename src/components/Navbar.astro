@@ -14,43 +14,51 @@ const menuItems : Record<Language, string[]> = {
   el: ['Χάρτης', 'Πώς να πληρώσετε', 'Για επιβάτες', 'Νέα', 'Σχετικά με το Μετρό', 'Επικοινωνία'],
 };
 
+const getPath = (item : string, index : number) => {
+  return currentLang === 'en' 
+    ? `/${currentLang}/${item.toLowerCase().replace(/\s/g, '')}`
+    : `/${menuItems.en[index].toLowerCase().replace(/\s/g, '')}`;
+};
+
 const currentMenuItems = menuItems[currentLang] || menuItems['el'];
 ---
-
-
-<nav class="navbar">
-    <div>
-        <div class="logo">
-          <a href="/">
-            <img src="/icons/logo_small.png" alt="Moscow Metro Logo" />
-          </a>
-            {currentLang === 'en' ? (
-              <span class="metro-title">Metro Thessaloniki</span>
-          ) : (
-              <span class="metro-title">Μετρό Θεσσαλονίκης</span>
-          )}
-
-         </div>
-    </div>
-
-    <ul class="menu">
-        {currentMenuItems.map((item, index) => (
-          <li>
-           {currentLang === 'en' ? (
-            <a href={`/${currentLang}/${item.toLowerCase().replace(/\s/g, '')}`}>{item}</a> ) : (
-            <a href={`/${menuItems.en[index].toLowerCase().replace(/\s/g, '')}`}>{item}</a>)
-           }
-          </li>
-        ))}
-        <li class="dropdown">
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="/">  
+          <img src="/icons/logo_small.png" height=100 class="d-inline-block align-text-top" alt="Metro Thessaloniki unofficial Logo" />
           {currentLang === 'en' ? (
-            <a href={greekPath}>Ελ 🇬🇷</a>
+          <div class="metro-title small">Metro Thessaloniki</div>
+      ) : (
+          <div class="metro-title small">Μετρό Θεσσαλονίκης</div>
+      )}
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          {currentMenuItems.map((item, index) => {
+            const path = getPath(item, index);
+            return (
+              <li class="nav-item">
+                <a class={`nav-link ${Astro.url.pathname.startsWith(path) ? 'active' : ''}`} href={path}>
+                  {item}
+                </a>
+              </li>
+            );
+          })}
+          {currentLang === 'en' ? (
+            <li class="nav-item">
+              <a class="nav-link" href={greekPath}>Ελ 🇬🇷</a>
+            </li>
           ) : (
-            <a href={englishPath}>En 🇬🇧</a>
+          <li class="nav-item">
+            <a class="nav-link" href={englishPath}>En 🇬🇧</a>
+          </li>
           )}
-        </li>
-    </ul>
-
+        </ul>
+      </div>
+    </div>
   </nav>
   <style>
     .metro-title {
