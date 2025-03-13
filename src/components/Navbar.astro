@@ -23,7 +23,7 @@ const getPath = (item : string, index : number) => {
 const currentMenuItems = menuItems[currentLang] || menuItems['el'];
 ---
 <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid">
+  <div class="container-fluid align-items-baseline">
       <a class="navbar-brand" href="/">  
           <img src="/icons/logo_small.png" height=100 class="d-inline-block align-text-top" alt="Metro Thessaloniki unofficial Logo" />
           {currentLang === 'en' ? (
@@ -71,6 +71,7 @@ const currentMenuItems = menuItems[currentLang] || menuItems['el'];
       font-size: 10px;
       position: absolute;
       top: -7px;
+      right: 0;
   }
     .navbar {
         display: flex;

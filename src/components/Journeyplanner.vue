@@ -6,7 +6,7 @@
             <img src="/photos/pass.jpg" alt="Passanger Paying for tickets">
           </div>
           <div class="form-wrapper">
-            <h2>{{ $t('whereTo') }}</h2>
+            <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>
             <div class="journey-inputs">
               <div class="input-group">
                 <input type="text" :placeholder="$t('from')" />
@@ -15,19 +15,19 @@
                   type="text"
                   :placeholder="$t('to')"
                 />
-                <button class="plan-button">{{ $t('plan') }}</button>
+                <button class="plan-button btn">{{ $t('plan') }}</button>
               </div>
               <div class="options-group">
                 <div class="option-buttons">
-                  <button class="option-button selected">{{ $t('departure') }}</button>
-                  <button class="option-button">{{ $t('arrival') }}</button>
+                  <button class="option-button btn selected">{{ $t('departure') }}</button>
+                  <button class="option-button btn">{{ $t('arrival') }}</button>
                 </div>
                 <div class="datetime-picker">
                   <input type="date" value="2024-09-10" />
                   <input type="time" value="21:14" />
                 </div>
-                <button class="now-button">{{ $t('now') }} &#8635;</button>
-                <button class="extra-options-button">{{ $t('extra') }} &#9662;</button>
+                <button class="now-button btn">{{ $t('now') }} &#8635;</button>
+                <button class="extra-options-button btn">{{ $t('extra') }} &#9662;</button>
               </div>
             </div>
           </div>
