@@ -1,0 +1,46 @@
+---
+import type { Language, Translations } from '../types/global';
+interface Props {
+	lang: Language;
+}
+const { lang } = Astro.props;
+const $t: Translations = {
+    el: {
+        travellingHeader: 'Συχνές Ερωτήσεις',
+        firstQuestion: 'Πού μπορώ να αγοράσω εισιτήριο για το ταξίδι;',
+        firstAnswer: 'Όλα τα εισιτήρια και οι εξατομικευμένες κάρτες μπορούν να αγοραστούν από τα αυτόματα μηχανήματα έκδοσης εισιτηρίων στους σταθμούς.',
+        secondQuestion: 'Μπορώ να πληρώσω με τραπεζική κάρτα;',
+        secondAnswer: 'Θα είναι δυνατό στο άμεσο μέλλον.',
+        thirdQuestion: 'Πώς μπορώ να συνδεθώ στο Wi-Fi στο μετρό;',
+        thirdAnswer: 'Δεν υπάρχει Wi-Fi στο μετρό.'
+    },
+    en : {
+        travellingHeader: 'Travelling',
+        tripPlanner: 'Trip planner',
+        firstAnswer: 'All tickets and personalized cards can be bought at the station’s ticket vending machines.',
+        secondQuestion: 'Can I pay with a bank card',
+        secondAnswer: 'It will be possible in the near future',
+        thirdQuestion: 'How do I connect to Wi-Fi in the metro?',
+        thirdAnswer: 'There is no Wi-Fi in the metro'
+    }
+}
+---
+
+<footer class="pt-5 pb-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+                <h4></h4>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <h4></h4>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <h4></h4>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <h4></h4>
+            </div>о
+        </div>
+    </div>
+</footer>

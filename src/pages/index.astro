@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Journerplanner from '../components/Journeyplanner.vue';
 import NewsHighlights from '../components/NewsHighlights.astro';
 import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
 
 type Language = 'en' | 'el';
 interface SiteMetaData {
@@ -24,6 +25,7 @@ const data : SiteMetaData = {
 		<Journerplanner lang={data.lang}/>
 		<NewsHighlights lang={data.lang} />
 		<Faq lang={data.lang} />
+		<!-- <Footer lang={data.lang} /> -->
 	</main>
 </Layout>
 <style>
