@@ -1,0 +1,113 @@
+
+---
+const currentLang  = Astro.url.pathname.startsWith('/en') ? 'en' : 'el';
+
+const content = {
+    en : {
+        text : "By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to enhance site navigation, and analyze site usage.",
+        button: "Accept All Cookies"
+    },
+    el: {
+        text : "Κάνοντας κλικ στο “Αποδοχή όλων των cookies”, συμφωνείτε με την αποθήκευση των cookies στη συσκευή σας για τη βελτίωση της πλοήγησης στον ιστότοπο και την ανάλυση της χρήσης του.",
+        button: "Αποδοχή όλων των cookies"
+    }
+}
+
+---
+<div class="als-cookie-button show" id="als-cookie-box">
+    <div>{ content[currentLang].text }
+        <button id="accept-cookies">{ content[currentLang].button }</button>
+    </div>
+</div>
+<script>
+    const handleCookie = () => {
+	const cookieBox = document.getElementById('als-cookie-box');
+	const cookieAccepted = document.cookie.includes('metroCookieAccepted=true');
+
+	if (!cookieAccepted) {
+		cookieBox.classList.add('show');
+	}
+
+	document.getElementById('accept-cookies').addEventListener('click', () => {
+		document.cookie = "metroCookieAccepted=true; max-age=" + 60 * 60 * 24 * 365 + "; path=/";
+		cookieBox.classList.remove('show');
+	});
+}
+
+handleCookie()
+
+</script>
+<style>
+.als-cookie-button {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translate3d(0, 110%, 0);
+    opacity: 0;
+    z-index: 11;
+    text-align: left;
+    width: 100%;
+    font-size: 16px;
+}
+.als-cookie-button.show {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+}
+@media (max-width: 900px) {
+    .als-cookie-button {
+        font-size: 15px;
+    }
+}
+@media (max-width: 700px) {
+.als-cookie-button {
+        font-size: 14px;
+    }
+}
+.als-cookie-button div {
+    background: #3c90cb;
+    color: #fff;
+    padding: 1.5em 21em 1.5em 2em;
+    cursor: pointer;
+    position: relative;
+    transition: all .3s;
+}
+.als-cookie-button {
+    transition: all .4s cubic-bezier(.165,.84,.44,1);
+}
+@media (max-width: 700px) {
+    .als-cookie-button div {
+        padding-right: 1em;
+        padding-left: 1em;
+    }
+}
+
+.als-cookie-button button {
+    background: rgba(255, 255, 255, .2);
+    font-size: inherit;
+    font-family: inherit;
+    border-radius: 50px;
+    border: none;
+    color: inherit;
+    outline: 0;
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 1em;
+    bottom: 1em;
+    cursor: pointer;
+    padding: 0 3em;
+    transition: all .3s;
+}
+
+@media (max-width: 700px) {
+    .als-cookie-button button {
+        position: static;
+        display: block;
+        padding: 1em;
+        text-align: center;
+        width: 100%;
+        margin-top: .5em;
+    }
+}
+</style>
