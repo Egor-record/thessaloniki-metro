@@ -4,37 +4,75 @@ const currentLang  = Astro.url.pathname.startsWith('/en') ? 'en' : 'el';
 
 const content = {
     en : {
-        text : "By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to enhance site navigation, and analyze site usage.",
-        button: "Accept All Cookies"
+        text : "We do not share your data with third-party companies. We use cookies to track the number of visitors and the city they came from.",
+        button: "Fine"
     },
     el: {
-        text : "Κάνοντας κλικ στο “Αποδοχή όλων των cookies”, συμφωνείτε με την αποθήκευση των cookies στη συσκευή σας για τη βελτίωση της πλοήγησης στον ιστότοπο και την ανάλυση της χρήσης του.",
-        button: "Αποδοχή όλων των cookies"
+        text : "Δεν κοινοποιούμε τα δεδομένα σας σε τρίτες εταιρείες. Χρησιμοποιούμε cookies για την παρακολούθηση του αριθμού των επισκεπτών και της πόλης από την οποία προήλθαν.",
+        button: "Εντάξει"
     }
 }
 
 ---
-<div class="als-cookie-button show" id="als-cookie-box">
+<div class="als-cookie-button" id="als-cookie-box">
     <div>{ content[currentLang].text }
         <button id="accept-cookies">{ content[currentLang].button }</button>
     </div>
 </div>
 <script>
-    const handleCookie = () => {
-	const cookieBox = document.getElementById('als-cookie-box');
-	const cookieAccepted = document.cookie.includes('metroCookieAccepted=true');
+  const handleCookie = () => {
+    const url = window.location.href;
+    const PAGE_NAME = getPageName(url);
+    const TRACKER_ID = '700961';
+    const COOKIE_NAME = 'nocookieMetro'
+    function getPageName(url: string): string {
+        const path = new URL(url).pathname.split('/').filter(Boolean);
+        const first = path[0];
+        const isLang = /^[a-z]{2}$/.test(first);
+        return isLang ? path[1] ?? 'index' : first ?? 'index';
+    }
+    const createTrackerBox = (sessionId : string) => {
+        const img = document.createElement('img');
+        img.src = `https://borisbot.site/watch/${TRACKER_ID}/${PAGE_NAME}?sessionId=${sessionId}`;
+        img.alt = 'This is activity tracker';
+        img.style.position = 'absolute';
+        img.style.left = '-9999px';
 
-	if (!cookieAccepted) {
-		cookieBox.classList.add('show');
-	}
+        document.body.appendChild(img);
+    }
+    const initTrackerBox = () => {
+        let sessionId = sessionStorage.getItem('sessionId');
+        if (!sessionId) {
+            sessionId = Math.floor(Math.random() * 1_000_000_000).toString()
+            sessionStorage.setItem('sessionId', sessionId);
+            createTrackerBox(sessionId);
+        } else {
+            createTrackerBox(sessionId);
+        }
+    }
+    const cookieBox = document.getElementById('als-cookie-box');
+    const cookieAccepted = document.cookie.includes(COOKIE_NAME + '=true');
 
-	document.getElementById('accept-cookies').addEventListener('click', () => {
-		document.cookie = "metroCookieAccepted=true; max-age=" + 60 * 60 * 24 * 365 + "; path=/";
-		cookieBox.classList.remove('show');
-	});
+    console.log(cookieAccepted && cookieBox)
+
+    if (!cookieAccepted) {
+        if (cookieBox) cookieBox.classList.add('show');
+    } else {
+        initTrackerBox()
+    }
+    const acceptBtn = document.getElementById('accept-cookies');
+
+    if (acceptBtn) {
+        acceptBtn.addEventListener('click', () => {
+            document.cookie = COOKIE_NAME + "=true; max-age=" + (60 * 60 * 24 * 365) + "; path=/";
+            if (cookieBox) {
+                cookieBox.classList.remove('show');
+                initTrackerBox()
+            }
+        });
+    }
 }
-
-handleCookie()
+handleCookie();
 
 </script>
 <style>
