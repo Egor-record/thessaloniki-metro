@@ -17,5 +17,5 @@ export default defineConfig({
       transformer: "postcss"
     }
   },
-  integrations: [vue(), sitemap()]
+  integrations: [vue({ devtools: true }), sitemap()]
 });

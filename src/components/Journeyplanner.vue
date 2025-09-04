@@ -6,15 +6,18 @@
             <img src="/photos/pass.jpg" alt="Passanger Paying for tickets">
           </div>
           <div class="form-wrapper">
-            <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>
+            <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>            
             <div class="journey-inputs">
               <div class="input-group">
-                <input type="text" :placeholder="$t('from')" />
+                <input type="text" v-model="from" :placeholder="$t('from')" />
+                <button class="geo-btn" @click="useGeo('from')" type="button">📍</button>
                 <button class="swap-button">&#x21c4;</button>
                 <input
                   type="text"
+                  v-model="to"
                   :placeholder="$t('to')"
                 />
+                <button class="geo-btn" @click="useGeo('to')">📍</button>
                 <button class="plan-button btn">{{ $t('plan') }}</button>
               </div>
               <div class="options-group">
@@ -30,6 +33,7 @@
                 <button class="extra-options-button btn">{{ $t('extra') }} &#9662;</button>
               </div>
             </div>
+            <p v-if="error" class="error">{{ error }}</p>
           </div>
         </div>
     </div>
@@ -46,7 +50,8 @@ const TRANSLATION = {
      departure: 'Αναχώρηση',
      arrival: 'Άφιξη',
      now: 'Τώρα',
-     extra: 'Πρόσθετες επιλογές'
+     extra: 'Πρόσθετες επιλογές',
+    geolocationNotSupported: 'Error geo location'
   },
   en: {
     whereTo: 'Where do you want to go?',
@@ -56,11 +61,32 @@ const TRANSLATION = {
     departure: 'Departure',
     arrival: 'Arrival',
     now: 'Now',
-    extra: 'Extra options'
+    extra: 'Extra options',
+    geolocationNotSupported: 'Error geo location'
   }
 }
+const STATIONS = [
+  { name: 'Neos Sidirodromikos Stathmos', lat: 40.64421636016618, lon: 22.927690579505224 },
+  { name: 'Dimokratias', lat: 40.64130180521715, lon: 22.935782080235427 },
+  { name: 'Venizelou', lat: 40.637697618146824, lon: 22.93947539502607 },
+  { name: 'Agias Sofias', lat: 40.63511629929138, lon: 22.94513278970566 },
+  { name: 'Sintrivani', lat: 40.63050693949274, lon: 22.954382094675818 },
+  { name: 'Panepistimio', lat: 40.626039413453256, lon: 22.961110411639687 },
+  { name: 'Papafi', lat: 40.62025461926455, lon: 22.964041683706103 },
+  { name: 'Fleming', lat: 40.61265594484967, lon: 22.95980450032778 },
+  { name: 'Analipsi', lat: 40.606472729348646, lon: 22.96058123474921 },
+  { name: '25 Martiou', lat: 40.601435818895524, lon: 22.961358097370578 },
+  { name: 'Nea Elvetia', lat: 40.594279140335885, lon: 22.96689444616156 },
+]
 export default {
   name: 'Journeyplanner',
+  data () {
+    return { 
+      from: "",
+      to: "",
+      error: null,
+    }
+  },
   props: {
     lang: {
       type: String,
@@ -71,6 +97,13 @@ export default {
   methods: {
     $t (word) {
       return TRANSLATION[this.lang][word]
+    },
+    async useGeo(field) {
+      this.error = null
+      if (!navigator.geolocation) {
+        this.error = this.$t("geolocationNotSupported")
+        return
+      }
     }
   }
 }
@@ -121,7 +154,7 @@ export default {
   }
 
   .journey-planner h2 {
-    margin-bottom: 20px;
+    margin: 20px 0;
     font-size: 24px;
   }
 
@@ -140,7 +173,7 @@ export default {
   .input-group input {
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 6px !important;
   }
 
   .swap-button {
@@ -158,7 +191,7 @@ export default {
     color: var(--main-white-color);
     border: none;
     padding: 10px 20px;
-    border-radius: 6px;
+    border-radius: 6px !important;
     cursor: pointer;
     width: 100%; /* Full width on mobile */
     margin-top: 20px; /* Added for spacing */
@@ -219,6 +252,21 @@ export default {
     width: 100%; /* Full width on mobile */
   }
 
+  // .input-with-btn {
+  //   position: relative;
+  //   display: flex;
+  //   align-items: center;
+  // }
+
+  // .geo-btn {
+  //   position: absolute;
+  //   right: 5px;
+  //   background: none;
+  //   border: none;
+  //   cursor: pointer;
+  //   font-size: 1.2rem;
+  // }
+
   /* Media Queries for larger screens (tablets and desktops) */
   @media screen and (min-width: 768px) {
     .journey-planner {
@@ -232,7 +280,7 @@ export default {
     }
 
     .form-wrapper {
-      padding-top: 30px;
+      padding: 30px 0;
     }
 
     .input-group {
