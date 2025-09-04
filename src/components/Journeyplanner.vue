@@ -9,16 +9,22 @@
             <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>            
             <div class="journey-inputs">
               <div class="input-group">
-                <input type="text" v-model="from" :placeholder="$t('from')" />
-                <button class="geo-btn" @click="useGeo('from')" type="button">📍</button>
+                <div class="input-wrapper">
+                  <input type="text" :v-model="inputs.from" :value="inputs.from" :placeholder="$t('from')" />
+                  <button class="geo-btn btn" @click="useGeo('from')">📍</button>
+                </div>
+    
                 <button class="swap-button">&#x21c4;</button>
-                <input
+                <div class="input-wrapper">
+                  <input
                   type="text"
-                  v-model="to"
+                  :value="inputs.to"
+                  :v-model="inputs.to"
                   :placeholder="$t('to')"
-                />
-                <button class="geo-btn" @click="useGeo('to')">📍</button>
-                <button class="plan-button btn">{{ $t('plan') }}</button>
+                  />
+                  <button class="geo-btn btn" @click="useGeo('to')">📍</button>
+                </div>
+                <button class="plan-button btn" :disabled="inputs.from === inputs.to">{{ $t('plan') }}</button>
               </div>
               <div class="options-group">
                 <div class="option-buttons">
@@ -51,7 +57,7 @@ const TRANSLATION = {
      arrival: 'Άφιξη',
      now: 'Τώρα',
      extra: 'Πρόσθετες επιλογές',
-    geolocationNotSupported: 'Error geo location'
+     geolocationNotSupported: 'Error geo location'
   },
   en: {
     whereTo: 'Where do you want to go?',
@@ -82,8 +88,14 @@ export default {
   name: 'Journeyplanner',
   data () {
     return { 
-      from: "",
-      to: "",
+      inputs: {
+        from: "",
+        to: "",
+      },
+      directions: {
+        from: "",
+        to: ""
+      },
       error: null,
     }
   },
@@ -104,6 +116,45 @@ export default {
         this.error = this.$t("geolocationNotSupported")
         return
       }
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const { latitude, longitude } = pos.coords
+          const nearest = this.findClosestStation(latitude, longitude, STATIONS);
+
+          console.log(`Nearest station: ${nearest.name}, Distance: ${nearest.distance.toFixed(2)} km`);
+          this.inputs[field] = `${nearest.name} (${nearest.distance.toFixed(2)} km)`
+          this.directions[field] = nearest.name
+
+        }, (err) => {
+          this.error = err.message
+        }
+      );
+    },
+    getDistance (lat1, lon1, lat2, lon2) {
+      const R = 6371
+      const dLat = ((lat2 - lat1) * Math.PI) / 180;
+      const dLon = ((lon2 - lon1) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    },
+    findClosestStation(userLat, userLon, stations) {
+      let closest = null;
+      let minDistance = Infinity;
+
+      for (const station of stations) {
+        const distance = this.getDistance(userLat, userLon, station.lat, station.lon);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = station;
+        }
+      }
+
+      return { ...closest, distance: minDistance };
     }
   }
 }
@@ -170,10 +221,15 @@ export default {
     gap: 15px;
   }
 
+  .input-wrapper {
+    position: relative;
+  }
+
   .input-group input {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px !important;
+    width: 100%;
   }
 
   .swap-button {
@@ -252,26 +308,24 @@ export default {
     width: 100%; /* Full width on mobile */
   }
 
-  // .input-with-btn {
-  //   position: relative;
-  //   display: flex;
-  //   align-items: center;
-  // }
+  .geo-btn {
+    background-color: #ecc329;
+    cursor: pointer;
+    font-size: 1.2rem;
+    position: absolute !important;
+    height: 40px;
+    right: 4px;
+    top: 3px;
+  }
 
-  // .geo-btn {
-  //   position: absolute;
-  //   right: 5px;
-  //   background: none;
-  //   border: none;
-  //   cursor: pointer;
-  //   font-size: 1.2rem;
-  // }
-
-  /* Media Queries for larger screens (tablets and desktops) */
   @media screen and (min-width: 768px) {
     .journey-planner {
       max-width: 1100px;
-      padding: 0 4rem 0 0;
+      padding: 0 2rem 0 0;
+    }
+
+    .input-group input {
+      min-width: 323px;
     }
 
     .journey-planner_inner {
