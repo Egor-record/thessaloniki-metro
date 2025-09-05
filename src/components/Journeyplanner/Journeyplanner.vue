@@ -5,85 +5,93 @@
           <div class="passanger-img">
             <img src="/photos/pass.jpg" alt="Passanger Paying for tickets">
           </div>
-          <div class="form-wrapper">
+          <form class="form-wrapper">
             <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>            
             <div class="journey-inputs">
               <div class="input-group">
                 <div class="input-wrapper">
-                  <input type="text" :v-model="inputs.from" :value="inputs.from" :placeholder="$t('from')" />
-                  <button class="geo-btn btn" @click="useGeo('from')">📍</button>
+                  <!-- FROM -->
+                  <input type="text" v-model="inputs.from" required :placeholder="$t('from')" @input="filterStations('from')" />
+                  <ul v-if="filteredStations.from.length && showDropdowns.from" class="dropdown">
+                    <li
+                      v-for="station in filteredStations['from']"
+                      :key="station.id"
+                      @click="selectStation(station.name[lang], 'from')"
+                    >
+                      {{ station.name[lang] }}
+                    </li>
+                  </ul>
+                  <button class="geo-btn btn"  type="button" @click="useGeo('from')" :aria-label="$t('findMyLocation')" 
+                  :title="$t('findMyLocation')">📍</button>
                 </div>
-    
-                <button class="swap-button">&#x21c4;</button>
+                <!-- Swap button -->
+                <button class="swap-button" type="button">&#x21c4;</button>
                 <div class="input-wrapper">
+                  <!-- TO -->
                   <input
                   type="text"
-                  :value="inputs.to"
-                  :v-model="inputs.to"
+                  v-model="inputs.to"
+                  required
+                  @input="filterStations('to')"
                   :placeholder="$t('to')"
                   />
-                  <button class="geo-btn btn" @click="useGeo('to')">📍</button>
+                  <ul v-if="filteredStations.to.length && showDropdowns.to" class="dropdown">
+                    <li
+                      v-for="station in filteredStations['to']"
+                      :key="station.id"
+                      @click="selectStation(station.name[lang], 'to')"
+                    >
+                      {{ station.name[lang] }}
+                    </li>
+                  </ul>
+                  <button class="geo-btn btn" type="button" @click="useGeo('to')" :aria-label="$t('findMyLocation')" 
+                  :title="$t('findMyLocation')">📍</button>
                 </div>
-                <button class="plan-button btn" :disabled="inputs.from === inputs.to">{{ $t('plan') }}</button>
               </div>
               <div class="options-group">
                 <div class="option-buttons">
-                  <button class="option-button btn selected">{{ $t('departure') }}</button>
-                  <button class="option-button btn">{{ $t('arrival') }}</button>
+                  <label class="option-button" :class="{ selected: selectedOption === 'departure' }">
+                    <input 
+                      type="radio" 
+                      value="departure" 
+                      v-model="selectedOption" 
+                      hidden
+                    />
+                    {{ $t('departure') }}
+                  </label>
+
+                  <label class="option-button" :class="{ selected: selectedOption === 'arrival' }">
+                    <input 
+                      type="radio" 
+                      value="arrival" 
+                      v-model="selectedOption" 
+                      hidden
+                    />
+                    {{ $t('arrival') }}
+                  </label>
                 </div>
                 <div class="datetime-picker">
                   <input type="date" value="2024-09-10" />
                   <input type="time" value="21:14" />
                 </div>
-                <button class="now-button btn">{{ $t('now') }} &#8635;</button>
-                <button class="extra-options-button btn">{{ $t('extra') }} &#9662;</button>
+                <button class="now-button btn" type="button">{{ $t('now') }} &#8635;</button>
+              </div>
+              <div class="input-group">
+                  <!-- Plan button -->
+                  <input type="submit" class="plan-button btn" :value="$t('plan')" >
               </div>
             </div>
             <p v-if="error" class="error">{{ error }}</p>
-          </div>
+          </form>
         </div>
     </div>
   </section>
 </template>
 
 <script>
-const TRANSLATION = {
-  el: {
-     whereTo: 'Πού θέλετε να πάτε;',
-     from: 'Από: Διεύθυνση, οδός, σταθμός',
-     to: 'Προς: Διεύθυνση, οδός, σταθμός',
-     plan: 'Προγραμματίστε τη διαδρομή σας',
-     departure: 'Αναχώρηση',
-     arrival: 'Άφιξη',
-     now: 'Τώρα',
-     extra: 'Πρόσθετες επιλογές',
-     geolocationNotSupported: 'Error geo location'
-  },
-  en: {
-    whereTo: 'Where do you want to go?',
-    from: 'From: Address, street, station',
-    to: 'To: Address, street, station',
-    plan: 'Plan your journey',
-    departure: 'Departure',
-    arrival: 'Arrival',
-    now: 'Now',
-    extra: 'Extra options',
-    geolocationNotSupported: 'Error geo location'
-  }
-}
-const STATIONS = [
-  { name: 'Neos Sidirodromikos Stathmos', lat: 40.64421636016618, lon: 22.927690579505224 },
-  { name: 'Dimokratias', lat: 40.64130180521715, lon: 22.935782080235427 },
-  { name: 'Venizelou', lat: 40.637697618146824, lon: 22.93947539502607 },
-  { name: 'Agias Sofias', lat: 40.63511629929138, lon: 22.94513278970566 },
-  { name: 'Sintrivani', lat: 40.63050693949274, lon: 22.954382094675818 },
-  { name: 'Panepistimio', lat: 40.626039413453256, lon: 22.961110411639687 },
-  { name: 'Papafi', lat: 40.62025461926455, lon: 22.964041683706103 },
-  { name: 'Fleming', lat: 40.61265594484967, lon: 22.95980450032778 },
-  { name: 'Analipsi', lat: 40.606472729348646, lon: 22.96058123474921 },
-  { name: '25 Martiou', lat: 40.601435818895524, lon: 22.961358097370578 },
-  { name: 'Nea Elvetia', lat: 40.594279140335885, lon: 22.96689444616156 },
-]
+import { STATIONS, TRANSLATION } from "./consts.js";
+import { GeoPositioner } from "./utils.js"
+
 export default {
   name: 'Journeyplanner',
   data () {
@@ -96,7 +104,16 @@ export default {
         from: "",
         to: ""
       },
+      showDropdowns: {
+        from: false,
+        to: false
+      },
+      filteredStations: {
+        from: [],
+        to: []
+      },
       error: null,
+      selectedOption: "departure"
     }
   },
   props: {
@@ -105,6 +122,13 @@ export default {
       required: true,
       default: 'el',
     },
+  },
+  computed: {
+    isDisabled() {
+      return this.inputs.from !== "" &&
+           this.inputs.to !== "" &&
+           this.inputs.from === this.inputs.to
+    }
   },
   methods: {
     $t (word) {
@@ -116,45 +140,36 @@ export default {
         this.error = this.$t("geolocationNotSupported")
         return
       }
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          const { latitude, longitude } = pos.coords
-          const nearest = this.findClosestStation(latitude, longitude, STATIONS);
 
-          console.log(`Nearest station: ${nearest.name}, Distance: ${nearest.distance.toFixed(2)} km`);
-          this.inputs[field] = `${nearest.name} (${nearest.distance.toFixed(2)} km)`
-          this.directions[field] = nearest.name
-
-        }, (err) => {
-          this.error = err.message
+      try {
+        const nearest = await new GeoPositioner().getGeopositions(field)
+        if (!nearest) {
+          this.error = geo.error
+          return
         }
-      );
-    },
-    getDistance (lat1, lon1, lat2, lon2) {
-      const R = 6371
-      const dLat = ((lat2 - lat1) * Math.PI) / 180;
-      const dLon = ((lon2 - lon1) * Math.PI) / 180;
-      const a =
-        Math.sin(dLat / 2) ** 2 +
-        Math.cos((lat1 * Math.PI) / 180) *
-        Math.cos((lat2 * Math.PI) / 180) *
-        Math.sin(dLon / 2) ** 2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return R * c;
-    },
-    findClosestStation(userLat, userLon, stations) {
-      let closest = null;
-      let minDistance = Infinity;
-
-      for (const station of stations) {
-        const distance = this.getDistance(userLat, userLon, station.lat, station.lon);
-        if (distance < minDistance) {
-          minDistance = distance;
-          closest = station;
-        }
+        this.inputs[field] = `${nearest.name[this.lang]} (${nearest.distance.toFixed(2)} km)`
+        this.directions[field] = nearest.name[this.lang]
+      } catch (error) {
+        console.error(error)
+        this.error = this.$t('geolocationNotSupported')
       }
 
-      return { ...closest, distance: minDistance };
+    },
+    filterStations(field) {
+      const query = this.inputs[field].toLowerCase();
+      if (!query) {
+        this.filteredStations[field] = [];
+        this.showDropdowns[field] = false;
+        return;
+      }
+      this.filteredStations[field] = STATIONS.filter(s =>
+        s.name[this.lang].toLowerCase().includes(query)
+      );
+      this.showDropdowns[field] = true;
+    },
+    selectStation(name, field) {
+      this.inputs[field] = name;
+      this.showDropdowns[field] = false;
     }
   }
 }
@@ -251,6 +266,7 @@ export default {
     cursor: pointer;
     width: 100%; /* Full width on mobile */
     margin-top: 20px; /* Added for spacing */
+    z-index:0 !important;
   }
 
   .plan-button:hover, .plan-button:active {
@@ -318,6 +334,32 @@ export default {
     top: 3px;
   }
 
+  .station-input {
+    position: relative;
+    width: 300px;
+  }
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 3 !important;
+  }
+  .dropdown li {
+    padding: 8px;
+    cursor: pointer;
+  }
+  .dropdown li:hover {
+    background: #f0f0f0;
+}
+
   @media screen and (min-width: 768px) {
     .journey-planner {
       max-width: 1100px;
@@ -338,12 +380,13 @@ export default {
     }
 
     .input-group {
-      flex-direction: row; /* Side-by-side inputs for larger screens */
+      flex-direction: row;
       gap: 10px;
+      flex-wrap: nowrap;
     }
 
     .swap-button {
-      width: auto; /* Button width adjusts for larger screens */
+      width: auto;
     }
 
     .options-group {
@@ -360,6 +403,7 @@ export default {
     .plan-button {
       width: auto; /* Button width adjusts for larger screens */
       margin-top: 0;
+      max-width: 300px;
     }
 
     .now-button,

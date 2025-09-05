@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Journerplanner from '../../components/Journeyplanner.vue';
+import Journerplanner from '../../components/Journeyplanner/Journeyplanner.vue';
 import NewsHighlights from '../../components/NewsHighlights.astro';
 import Faq from '../../components/Faq.astro';
 
@@ -21,7 +21,7 @@ const data = {
 
 <Layout title={data.title} description={data.description}>
 	<main>
-		<Journerplanner lang={data.lang}/>
+		<Journerplanner  client:load  lang={data.lang}/>
 		<NewsHighlights lang={data.lang} />
 		<Faq lang={data.lang} />
 		<footer class="pt-5 pb-5 bg-white">
