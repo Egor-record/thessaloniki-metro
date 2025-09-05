@@ -5,48 +5,32 @@
           <div class="passanger-img">
             <img src="/photos/pass.jpg" alt="Passanger Paying for tickets">
           </div>
-          <form class="form-wrapper">
+          <form class="form-wrapper" @submit.prevent="goToMap">
             <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>            
             <div class="journey-inputs">
               <div class="input-group">
-                <div class="input-wrapper">
-                  <!-- FROM -->
-                  <input type="text" v-model="inputs.from" required :placeholder="$t('from')" @input="filterStations('from')" />
-                  <ul v-if="filteredStations.from.length && showDropdowns.from" class="dropdown">
-                    <li
-                      v-for="station in filteredStations['from']"
-                      :key="station.id"
-                      @click="selectStation(station.name[lang], 'from')"
-                    >
-                      {{ station.name[lang] }}
-                    </li>
-                  </ul>
-                  <button class="geo-btn btn"  type="button" @click="useGeo('from')" :aria-label="$t('findMyLocation')" 
-                  :title="$t('findMyLocation')">📍</button>
-                </div>
+                <StationInput 
+                  v-model="inputs.from"
+                  v-model:showDropdowns="showDropdowns"
+                  :lang="lang"
+                  :filteredStations="filteredStations"
+                  direction="from"
+                  @use-geo="useGeo"
+                  @select-station="selectStation"
+                  @filter-stations="filterStations"
+                />
                 <!-- Swap button -->
                 <button class="swap-button" type="button">&#x21c4;</button>
-                <div class="input-wrapper">
-                  <!-- TO -->
-                  <input
-                  type="text"
+                <StationInput 
                   v-model="inputs.to"
-                  required
-                  @input="filterStations('to')"
-                  :placeholder="$t('to')"
-                  />
-                  <ul v-if="filteredStations.to.length && showDropdowns.to" class="dropdown">
-                    <li
-                      v-for="station in filteredStations['to']"
-                      :key="station.id"
-                      @click="selectStation(station.name[lang], 'to')"
-                    >
-                      {{ station.name[lang] }}
-                    </li>
-                  </ul>
-                  <button class="geo-btn btn" type="button" @click="useGeo('to')" :aria-label="$t('findMyLocation')" 
-                  :title="$t('findMyLocation')">📍</button>
-                </div>
+                  v-model:showDropdowns="showDropdowns"
+                  :lang="lang"
+                  :filteredStations="filteredStations"
+                  direction="to"
+                  @use-geo="useGeo"
+                  @select-station="selectStation"
+                  @filter-stations="filterStations"
+                />
               </div>
               <div class="options-group">
                 <div class="option-buttons">
@@ -70,11 +54,7 @@
                     {{ $t('arrival') }}
                   </label>
                 </div>
-                <div class="datetime-picker">
-                  <input type="date" value="2024-09-10" />
-                  <input type="time" value="21:14" />
-                </div>
-                <button class="now-button btn" type="button">{{ $t('now') }} &#8635;</button>
+                <Datepicker v-model="departureDateTime" />
               </div>
               <div class="input-group">
                   <!-- Plan button -->
@@ -91,9 +71,19 @@
 <script>
 import { STATIONS, TRANSLATION } from "./consts.js";
 import { GeoPositioner } from "./utils.js"
-
+import StationInput from './StationInput.vue';
+import Datepicker from './Datepicker.vue'
 export default {
   name: 'Journeyplanner',
+  components: {
+    StationInput,
+    Datepicker
+  },
+  provide() {
+    return {
+      t: this.$t
+    }
+  },
   data () {
     return { 
       inputs: {
@@ -112,6 +102,7 @@ export default {
         from: [],
         to: []
       },
+      departureDateTime: "2024-09-10T21:14",
       error: null,
       selectedOption: "departure"
     }
@@ -122,13 +113,6 @@ export default {
       required: true,
       default: 'el',
     },
-  },
-  computed: {
-    isDisabled() {
-      return this.inputs.from !== "" &&
-           this.inputs.to !== "" &&
-           this.inputs.from === this.inputs.to
-    }
   },
   methods: {
     $t (word) {
@@ -168,8 +152,21 @@ export default {
       this.showDropdowns[field] = true;
     },
     selectStation(name, field) {
-      this.inputs[field] = name;
+      this.inputs[field] = this.directions[field] = name;
       this.showDropdowns[field] = false;
+    },
+    goToMap() {
+      const params = new URLSearchParams({
+        from: this.directions.from,
+        to: this.directions.to,
+        departureDateTime: this.departureDateTime,
+        arrival: this.selectedOption === 'arrival' ? 'true' : 'false'
+      })
+      const url = (this.lang && this.lang !== '' && this.lang == 'en') 
+        ? `/${this.lang}/map?${params.toString()}` 
+        : `/map?${params.toString()}`
+
+      window.location.href = url
     }
   }
 }
