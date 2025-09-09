@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
+import MapImage from '../components/Map/Map.vue';
 
 type Language = 'en' | 'el';
 interface data {
@@ -21,7 +21,7 @@ const data = {
 	<main>
         <h1 class="text-center">{data.title}</h1>
 		<section class="text-center">
-			<img src="/icons/map.svg" class="img-fluid" alt="Metro of Thessaloniki" />
+			<MapImage client:load />
 		</section>
 	</main>
 </Layout>

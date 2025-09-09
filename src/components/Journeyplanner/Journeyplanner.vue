@@ -69,7 +69,8 @@
 </template>
 
 <script>
-import { STATIONS, TRANSLATION } from "./consts.js";
+import { STATIONS } from '../../utils/globalConst.js'
+import { TRANSLATION } from "./consts.js";
 import { GeoPositioner } from "./utils.js"
 import StationInput from './StationInput.vue';
 import Datepicker from './Datepicker.vue'
