@@ -4,7 +4,6 @@ import Layout from '../layouts/Layout.astro';
 type Language = 'en' | 'el';
 interface data {
 	title: string;
-
 	lang: Language
 }
 
@@ -16,7 +15,7 @@ const data = {
 
 ---
 
-<Layout title={data.title}  description={data.description}>
+<Layout title={data.title}  description={data.description} isSmall={false}>
 	<main>
         <h1>404 - Η σελίδα δεν βρέθηκε</h1>
         <p>Ωχ! Η σελίδα που ψάχνετε δεν υπάρχει.</p>
