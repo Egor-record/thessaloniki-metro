@@ -2,9 +2,10 @@
 import type { Language } from '../types/global';
 interface Props {
 	currentLang: Language;
+  isSmall: boolean
 }
 
-const { currentLang } = Astro.props;
+const { currentLang, isSmall } = Astro.props;
 
 const greekPath = Astro.url.pathname.replace(/^\/en/, '') || '/';
 const englishPath = '/en' + (Astro.url.pathname === '/' ? '' : Astro.url.pathname);
@@ -25,7 +26,7 @@ const currentMenuItems = menuItems[currentLang] || menuItems['el'];
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid align-items-baseline">
       <a class="navbar-brand" href="/">  
-          <img src="/icons/logo_small.png" height=100 class="d-inline-block align-text-top" alt="Metro Thessaloniki unofficial Logo" />
+          <img src="/icons/logo_small.png" height={isSmall ? 50 : 100} class="d-inline-block align-text-top" alt="Metro Thessaloniki unofficial Logo" />
           {currentLang === 'en' ? (
           <div class="metro-title small">Metro Thessaloniki</div>
       ) : (
@@ -61,18 +62,7 @@ const currentMenuItems = menuItems[currentLang] || menuItems['el'];
     </div>
   </nav>
   <style>
-    .metro-title {
-      position: relative;
-    }
-    .metro-title::after {
-      color: #005b92;
-      content: "Unofficial";
-      font-weight: 700;
-      font-size: 10px;
-      position: absolute;
-      top: -7px;
-      right: 0;
-  }
+
     .navbar {
         display: flex;
         justify-content: space-between;

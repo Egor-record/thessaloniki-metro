@@ -7,8 +7,9 @@ const currentLang  = Astro.url.pathname.startsWith('/en') ? 'en' : 'el';
 interface Props {
 	title: string;
 	description: string;
+	isSmall: boolean
 }
-const { title, description } = Astro.props;
+const { title, description, isSmall } = Astro.props;
 
 ---
 <!doctype html>
@@ -23,7 +24,7 @@ const { title, description } = Astro.props;
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 	</head>
 	<body>
-		<Navbar currentLang={currentLang} />
+		<Navbar currentLang={currentLang} isSmall={isSmall} />
 		<slot />
 		<CookieBox  currentLang={currentLang} />
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -35,19 +36,14 @@ console.log(
 	"%cVersion: %c1.0.0\n\n" +
 	"%cTo report an issue, visit:\n%chttps://github.com/Egor-record/thessaloniki-metro/issues\n\n" +
 	"%cFor communication: %cmailbox@thessaloniki-metro.gr\n",
-	"font-size: 16px; font-weight: bold; color: #2d85c4;", // Style for heading
-	"font-size: 14px; color: #444;", // Style for general text
-	"font-size: 14px; color: #ff7f50;", // Style for version
-	"font-size: 14px; color: #444;", // Style for general text
-	"font-size: 14px; color: #007acc;", // Style for URL
-	"font-size: 14px; color: #444;", // Style for general text
-	"font-size: 14px; color: #007acc;"  // Style for email
+	"font-size: 16px; font-weight: bold; color: #2d85c4;",
 );
 </script>
 <style is:global>
 	@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&family=Roboto&display=swap');
 	:root {
 		--main-white-color: white;
+		--blue-gradient: linear-gradient(150deg,#00477f 0,#459BD6 100%);
 	}
 	@font-face {
 		font-family: "Roboto", sans-serif;
@@ -74,4 +70,21 @@ console.log(
 	.text-center {
 		text-align: center;
 	}
+
+	.bg-blue {
+		background: var(--blue-gradient)
+	}
+
+	.metro-title {
+      position: relative;
+    }
+    .metro-title::after {
+      color: #005b92;
+      content: "Fansite";
+      font-weight: 700;
+      font-size: 10px;
+      position: absolute;
+      top: -7px;
+      right: 0;
+  }
 </style>

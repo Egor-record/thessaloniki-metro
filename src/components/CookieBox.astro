@@ -53,8 +53,6 @@ const content = {
     const cookieBox = document.getElementById('als-cookie-box');
     const cookieAccepted = document.cookie.includes(COOKIE_NAME + '=true');
 
-    console.log(cookieAccepted && cookieBox)
-
     if (!cookieAccepted) {
         if (cookieBox) cookieBox.classList.add('show');
     } else {

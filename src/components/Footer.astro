@@ -6,22 +6,17 @@ interface Props {
 const { lang } = Astro.props;
 const $t: Translations = {
     el: {
-        travellingHeader: 'Συχνές Ερωτήσεις',
-        firstQuestion: 'Πού μπορώ να αγοράσω εισιτήριο για το ταξίδι;',
-        firstAnswer: 'Όλα τα εισιτήρια και οι εξατομικευμένες κάρτες μπορούν να αγοραστούν από τα αυτόματα μηχανήματα έκδοσης εισιτηρίων στους σταθμούς.',
-        secondQuestion: 'Μπορώ να πληρώσω με τραπεζική κάρτα;',
-        secondAnswer: 'Θα είναι δυνατό στο άμεσο μέλλον.',
-        thirdQuestion: 'Πώς μπορώ να συνδεθώ στο Wi-Fi στο μετρό;',
-        thirdAnswer: 'Δεν υπάρχει Wi-Fi στο μετρό.'
+        logo: 'Μετρό Θεσσαλονίκης',
+        about: 'Δημιουργία, σχεδιασμός, σύλληψη και ανάπτυξη του έργου:',
+        egor: 'Εγκόρ Σιάσκοφ',
+        about2: 'Επιπλέον υλικά, προτάσεις, σχόλια και διορθώσεις είναι ευπρόσδεκτα στη διεύθυνση:'
+
     },
     en : {
-        travellingHeader: 'Travelling',
-        tripPlanner: 'Trip planner',
-        firstAnswer: 'All tickets and personalized cards can be bought at the station’s ticket vending machines.',
-        secondQuestion: 'Can I pay with a bank card',
-        secondAnswer: 'It will be possible in the near future',
-        thirdQuestion: 'How do I connect to Wi-Fi in the metro?',
-        thirdAnswer: 'There is no Wi-Fi in the metro'
+        logo: 'Metro Thessaloniki',
+        about: 'Creation, design, concept, and project development:',
+        egor: 'Egor Siaskov',
+        about2: 'Additional materials, suggestions, comments, and corrections are welcome at:'
     }
 }
 ---
@@ -29,18 +24,16 @@ const $t: Translations = {
 <footer class="pt-5 pb-5 bg-white">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
-                <h4></h4>
+            <div class="col-12 col-md-3 d-flex mb-3">
+                <a class="navbar-brand text-center" href="/">  
+                    <img src="/icons/logo_small.png" height=50 alt="Metro Thessaloniki unofficial Logo" />
+                    <div class="metro-title small">{$t[lang].logo}</div>
+                </a>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <h4></h4>
+            <div class="col-12 col-md-9">
+                {$t[lang].about}  <a href="https://e922.ru/about/" target="_blank">{$t[lang].egor}</a><br>
+                {$t[lang].about2} <a href="mailto:mailbox@thessaloniki-metro.gr">mailbox@thessaloniki-metro.gr</a>
             </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <h4></h4>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <h4></h4>
-            </div>о
         </div>
     </div>
 </footer>
