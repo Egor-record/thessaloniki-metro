@@ -20,7 +20,7 @@ const data : SiteMetaData = {
 
 ---
 
-<Layout title={data.title}  description={data.description}>
+<Layout title={data.title}  description={data.description} isSmall={false}>
 	<main class="bg-blue">
 		<Journeyplanner client:load lang={data.lang} withRedirect={true} />
 		<NewsHighlights lang={data.lang} />
