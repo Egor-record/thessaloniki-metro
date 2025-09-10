@@ -1,4 +1,4 @@
-import { STATIONS } from "./consts.js";
+import { STATIONS } from "../../utils/globalConst.js";
 
 export class GeoPositioner {
     async getGeopositions (field) {
