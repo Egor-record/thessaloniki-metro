@@ -1,0 +1,25 @@
+---
+import type { Language } from '../types/global';
+interface Props {
+	imgSrc: string;
+    headingText: string
+}
+
+const { imgSrc, headingText } = Astro.props;
+
+---
+
+<div class="background background--half">
+    <img role="presentation" src={imgSrc} width="1920" height="400"> 
+    <div class="container">
+        <h1 class="mt-3">{ headingText }</h1>
+    </div>
+</div>
+<style>
+    img {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>

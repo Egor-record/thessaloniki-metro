@@ -1,0 +1,46 @@
+---
+import type { Language, Translations } from '../types/global';
+interface Props {
+	lang: Language;
+}
+const { lang } = Astro.props;
+const $t: Translations = {
+  el: {
+    disclaimer: "Αυτός δεν είναι ο επίσημος ιστότοπος του μετρό της Θεσσαλονίκης. Εάν έχετε σχόλια σχετικά με τη λειτουργία αυτού του ιστότοπου, παρακαλώ στείλτε email σε αυτή τη διεύθυνση:",
+    officialSite: "Μπορείτε να βρείτε τον επίσημο ιστότοπο του μετρό σε αυτόν τον σύνδεσμο:",
+    officialPhone: "Το κέντρο κλήσεων λειτουργεί από τις 7:00 το πρωί έως τις 23:00 το βράδυ. Επίσημο τηλέφωνο:",
+    officialAddress: "Επίσημη διεύθυνση: THEMA SA, Thessaloniki Metro, Pylaia Depot, Poseidonos 40-60, ΤΚ 555 35"
+  },
+  en: {
+    disclaimer: "This is not the official website of the Thessaloniki Metro. If you have any comments regarding the operation of this site, please send an email to this address:",
+    officialSite: "You can find the official metro website at this link:",
+    officialPhone: "The call center operates from 7 AM to 11 PM. Official phone ",
+    officialAddress: "Official address: THEMA SA, Thessaloniki Metro, Pylaia Depot, Poseidonos 40-60, ZIP Code 555 35"
+  }
+}
+
+---
+
+<div class="container">
+    <p class="mt-5">
+        { $t[lang].disclaimer} <a href="mailto:mailbox@thessaloniki-metro.gr">mailbox@thessaloniki-metro.gr</a>.  { $t[lang].officialSite} <a href="https://www.thessmetro.gr/" target="_blank">https://www.thessmetro.gr/</a>
+    </p>
+    <p>
+       
+    </p>
+    <p>
+        { $t[lang].officialPhone} 
+        <a href="tel:+302312311111" class="phone-link">
+            <strong>+30 231 231 1111</strong>
+        </a>
+    </p>
+    <p>
+        { $t[lang].officialAddress} 
+    </p>
+</div>
+<style>
+    .phone-link {
+      font-weight: bold;
+      text-decoration: none; /* optional */
+    }
+</style>

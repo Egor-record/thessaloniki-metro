@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-
+import HeroImage from '../../components/HeroImage.astro';
+import Footer from '../../components/Footer.astro';
+import ContactBlock from '../../components/ContactBlock.astro';
 
 type Language = 'en' | 'el';
 interface data {
@@ -17,11 +19,10 @@ const data = {
 
 ---
 
-<Layout title={data.title}  description={data.description}>
+<Layout title={data.title}  description={data.description} isSmall={true}>
 	<main>
-        <h1>{data.title}</h1>
+		<HeroImage imgSrc="/photos/sky.jpg" headingText={data.title} />
+		<ContactBlock lang="en" />
 	</main>
+	<Footer lang={data.lang} />
 </Layout>
-<style>
-
-</style>

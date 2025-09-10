@@ -3,7 +3,7 @@
       <div class="journey-planner">
         <div class="journey-planner_inner">
           <div class="passanger-img">
-            <img src="/photos/pass.jpg" alt="Passanger Paying for tickets">
+            <img :src="withRedirect ? '/photos/pass.jpg' : '/photos/pass_metro.jpg'"  alt="Passanger Paying for tickets"> 
           </div>
           <form class="form-wrapper" @submit.prevent="goToMap">
             <h2 class="mt-md-0 mt-sm-4">{{ $t('whereTo') }}</h2>            
@@ -114,6 +114,11 @@ export default {
       required: true,
       default: 'el',
     },
+    withRedirect: {
+      type: Boolean,
+      required: true,
+      default: true,
+    }
   },
   methods: {
     $t (word) {
@@ -167,7 +172,9 @@ export default {
         ? `/${this.lang}/map?${params.toString()}` 
         : `/map?${params.toString()}`
 
-      window.location.href = url
+      if (this.withRedirect) return window.location.href = url
+      window.history.pushState({}, "", url)
+      window.dispatchEvent(new PopStateEvent("routechange")) 
     }
   }
 }

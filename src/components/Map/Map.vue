@@ -1,7 +1,7 @@
 <template>
     <div>
       <p>{{ estimatedTime ? "Time estimated: " + estimatedTime + " min" : "" }} </p>
-      <SvgMap @station-selected="handleStationSelected" :selectedId="selectedStations"></SvgMap>
+      <SvgMap @station-selected="handleStationSelected" :selectedId="selectedStations" ref="map"></SvgMap>
     </div>
   </template>
 <script>
@@ -12,6 +12,13 @@ export default {
   components: {
     SvgMap
   },
+  props: {
+    lang: {
+      type: String,
+      required: true,
+      default: 'el',
+    }
+  },
   data () {
     return {
       selectedStationId: '',
@@ -20,12 +27,12 @@ export default {
     }
   },
   mounted() {
+    window.addEventListener("routechange", () => {this.parseRouteURL(); this.scrollToMap()})
     this.parseRouteURL()
   },
   methods: {
     handleStationSelected(id) {
       this.selectedStationId = id
-      console.log("Parent received station id:", id)
     },
     parseRouteURL() {
       const params = new URLSearchParams(window.location.search)
@@ -39,8 +46,11 @@ export default {
       this.selectedStations = result.path
       this.estimatedTime = result.time
     },
-    getStationIdByName(name, lang = 'el') {
-      const station = STATIONS.find(s => s.name[lang] === name)
+    getStationIdByName(name) {
+      if (!name) return null
+      const station = STATIONS.find(
+        s => s.name?.[this.lang]?.toLowerCase() === name?.toLowerCase()
+      )
       return station ? station.id : null
     },
     buildRoute(stations, start, end) {
@@ -76,6 +86,15 @@ export default {
       }
 
       return { path, time: times[end] }
+    },
+    scrollToMap () {
+      if (this.$refs.map) {
+        const top = this.$refs.map.offsetTop - (window.innerHeight / 2) + (this.$refs.map.offsetHeight / 2)
+        window.scrollTo({
+          top,
+          behavior: "smooth"
+        })
+      }
     }
   }
 }

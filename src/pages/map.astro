@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import MapImage from '../components/Map/Map.vue';
+import Journeyplanner from '../components/Journeyplanner/Journeyplanner.vue';
+import Footer from '../components/Footer.astro'
 
 type Language = 'en' | 'el';
 interface data {
@@ -17,12 +19,14 @@ const data = {
 
 ---
 
-<Layout title={data.title}  description={data.description}>
+<Layout title={data.title}  description={data.description} isSmall={true}>
 	<main>
         <h1 class="text-center">{data.title}</h1>
 		<section class="text-center">
 			<MapImage client:load />
 		</section>
+		<Journeyplanner client:load lang={data.lang} withRedirect={false} class="bg-blue mt-5"/>
+		<Footer lang={data.lang} />
 	</main>
 </Layout>
 <style>
