@@ -1,0 +1,32 @@
+---
+import type { Language, Translations } from '../../types/global';
+interface Props {
+	lang: Language;
+}
+const { lang } = Astro.props;
+const $t: Translations = {
+  el: {
+    first: "Εξερευνήστε τη Θεσσαλονίκη με τον διαδραστικό χάρτη μετρό. Ο εύχρηστος αυτός χάρτης του Μετρό Θεσσαλονίκης σας βοηθά να οργανώσετε το ταξίδι σας μέσα στην πόλη. Επιλέγοντας τον σταθμό αφετηρίας και τον σταθμό προορισμού, μπορείτε άμεσα να δείτε πόσο χρόνο θα διαρκέσει η διαδρομή σας.",
+    second: "Ο χάρτης του μετρό δεν είναι μόνο ένα εργαλείο μετακίνησης – επισημαίνει επίσης τα πλησιέστερα τουριστικά αξιοθέατα γύρω από κάθε σταθμό. Είτε κατευθύνεστε προς το ιστορικό κέντρο, τα πολιτιστικά μνημεία, είτε τις σύγχρονες εμπορικές περιοχές, μπορείτε εύκολα να ανακαλύψετε τι αξίζει να δείτε κοντά στη στάση σας.",
+    third: "Η χρήση αυτού του διαδραστικού χάρτη είναι ο πιο γρήγορος τρόπος για να σχεδιάσετε τη διαδρομή σας, να ελέγξετε τον χρόνο μετακίνησης και να γνωρίσετε τη Θεσσαλονίκη σαν ντόπιος."
+  },
+  en: {
+    first: "Explore Thessaloniki with our interactive metro map. This easy-to-use map of the Thessaloniki Metro helps you plan your journey across the city. By selecting departure and arrival stations, you can instantly see how much travel time your trip will take.",
+    second: "Our metro map is more than just a transport tool – it also highlights the nearest tourist attractions around each station. Whether you are heading to the historic city center, cultural landmarks, or modern shopping districts, you can quickly discover what to visit near your stop.",
+    third: "Using this interactive map is the fastest way to plan your route, check travel times, and explore Thessaloniki like a local."
+  }
+}
+
+---
+
+<div class="container mt-5">
+    <p>
+        { $t[lang].first } 
+    </p>
+    <p>	
+        { $t[lang].second } 
+    </p>
+    <p>
+        { $t[lang].third } 
+    </p>
+</div>

@@ -1,6 +1,5 @@
 <template>
-    <div>
-      <p>{{ estimatedTime ? "Time estimated: " + estimatedTime + " min" : "" }} </p>
+    <div class="svg-wrapper">
       <SvgMap @station-selected="handleStationSelected" :selectedId="selectedStations" ref="map"></SvgMap>
     </div>
   </template>
@@ -98,4 +97,18 @@ export default {
     }
   }
 }
-  </script>
+</script>
+<style>
+.svg-wrapper {
+  overflow-x: auto;              
+  -webkit-overflow-scrolling: touch; 
+  max-width: 100%;
+  display: flex;                
+  justify-content: center;
+}
+
+.svg-wrapper svg {
+  display: block;
+  min-width: 595px;
+}
+</style>

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import MapImage from '../components/Map/Map.vue';
 import Journeyplanner from '../components/Journeyplanner/Journeyplanner.vue';
+import SeoText from '../components/Map/SeoText.astro';
 import Footer from '../components/Footer.astro'
 
 type Language = 'en' | 'el';
@@ -26,6 +27,7 @@ const data = {
 			<MapImage client:load />
 		</section>
 		<Journeyplanner client:load lang={data.lang} withRedirect={false} class="bg-blue mt-5"/>
+		<SeoText lang={"el"} />
 		<Footer lang={data.lang} />
 	</main>
 </Layout>
