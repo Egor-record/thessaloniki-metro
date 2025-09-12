@@ -4,6 +4,7 @@ import Journerplanner from '../../components/Journeyplanner/Journeyplanner.vue';
 import NewsHighlights from '../../components/NewsHighlights.astro';
 import Faq from '../../components/Faq.astro';
 import Footer from '../../components/Footer.astro'
+import { withDelays } from '../../utils/globalConst';
 
 type Language = 'en' | 'el';
 interface data {
@@ -18,11 +19,13 @@ const data = {
 	lang : 'en' as Language,
 }
 
+const delays = await withDelays()
+
 ---
 
 <Layout title={data.title} description={data.description} isSmall={false}>
 	<main>
-		<Journerplanner  client:load  lang={data.lang} withRedirect={true}/>
+		<Journerplanner  client:load  lang={data.lang} withRedirect={true} withDelays={delays} />
 		<NewsHighlights lang={data.lang} />
 		<Faq lang={data.lang} />
 		<Footer lang={data.lang} />

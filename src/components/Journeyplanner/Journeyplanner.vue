@@ -1,5 +1,17 @@
 <template>
-  <section class="journey-planner_wrapper">
+  <section class="journey-planner_wrapper is-relative">
+    <div class="bg-blue line-status is-absolute ">
+      <div class="color-white">{{ $t('lineStatus') }}:
+        <span class="status">
+          <template v-if="withDelays">
+            <span class="fading">🔴</span> {{ $t('delays') }}
+          </template>
+          <template v-else>
+            <span class="fading">🟢</span> {{ $t('noDelays') }}
+          </template>
+        </span>
+      </div>
+    </div>
       <div class="journey-planner">
         <div class="journey-planner_inner">
           <div class="passanger-img">
@@ -118,6 +130,11 @@ export default {
       type: Boolean,
       required: true,
       default: true,
+    },
+    withDelays: {
+      type: Boolean,
+      required: true,
+      default: false,
     }
   },
   methods: {
@@ -363,7 +380,24 @@ export default {
   }
   .dropdown li:hover {
     background: #f0f0f0;
-}
+  }
+
+  .line-status {
+    right: 0;
+    top: 0;
+    padding: 0 10px
+  }
+
+  .fading {
+    opacity: 0;
+    animation: fadeInOut 5s infinite;
+  }
+
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
 
   @media screen and (min-width: 768px) {
     .journey-planner {

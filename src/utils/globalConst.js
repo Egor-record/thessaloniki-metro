@@ -1,3 +1,7 @@
+import fs from "fs/promises";
+import path from "path";
+
+
 export const STATIONS = [
     { 
       id: "neos-sidirodromikos",
@@ -166,3 +170,13 @@ export const STATIONS_GRAPH = {
     },
     "nea-elvetia": { "voulgari": 3 }
 }
+
+export const withDelays = async () => {
+    try {
+      const filePath = path.resolve("./src/data/delays.json");
+      await fs.access(filePath);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };

@@ -10,7 +10,10 @@ export const TRANSLATION = {
         arrival: 'Άφιξη',
         now: 'Τώρα',
         geolocationNotSupported: 'Error geo location',
-        findMyLocation: 'Βρες την τοποθεσία μου'
+        findMyLocation: 'Βρες την τοποθεσία μου',
+        lineStatus: 'Kατάσταση γραμμής',
+        noDelays: 'Xωρίς καθυστερήσεις',
+        delays: 'Καθυστερήσεις στη γραμμή'
     },
     en: {
         whereTo: 'Where do you want to go?',
@@ -21,6 +24,9 @@ export const TRANSLATION = {
         arrival: 'Arrival',
         now: 'Now',
         geolocationNotSupported: 'Error geo location',
-        findMyLocation: 'Find my location'
+        findMyLocation: 'Find my location',
+        lineStatus: 'Line Status',
+        noDelays: 'No Delays',
+        delays: 'Delays on line'
     }
 }
