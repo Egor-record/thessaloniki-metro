@@ -4,6 +4,7 @@ import MapImage from '../components/Map/Map.vue';
 import Journeyplanner from '../components/Journeyplanner/Journeyplanner.vue';
 import SeoText from '../components/Map/SeoText.astro';
 import Footer from '../components/Footer.astro'
+import { withDelays } from '../utils/globalConst';
 
 type Language = 'en' | 'el';
 interface data {
@@ -18,6 +19,7 @@ const data = {
 	lang: "el" as Language,
 }
 
+const isDelayed = await withDelays()
 ---
 
 <Layout title={data.title}  description={data.description} isSmall={true}>
@@ -26,7 +28,7 @@ const data = {
 		<section class="text-center">
 			<MapImage client:load />
 		</section>
-		<Journeyplanner client:load lang={data.lang} withRedirect={false} class="bg-blue mt-5"/>
+		<Journeyplanner client:load lang={data.lang} withRedirect={false} withDelays={isDelayed} class="bg-blue mt-5"/>
 		<SeoText lang={"el"} />
 		<Footer lang={data.lang} />
 	</main>

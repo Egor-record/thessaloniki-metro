@@ -19,13 +19,13 @@ const data = {
 	lang : 'en' as Language,
 }
 
-const delays = await withDelays()
+const isDelayed = await withDelays()
 
 ---
 
 <Layout title={data.title} description={data.description} isSmall={false}>
 	<main>
-		<Journerplanner  client:load  lang={data.lang} withRedirect={true} withDelays={delays} />
+		<Journerplanner  client:load  lang={data.lang} withRedirect={true} withDelays={isDelayed} />
 		<NewsHighlights lang={data.lang} />
 		<Faq lang={data.lang} />
 		<Footer lang={data.lang} />
